@@ -102,3 +102,14 @@ Finalmente, tras ejecutar el docker-compose...
 Por último, guardamos los cambios en la rama features/estructura-inicial (posteriormente, lo agregaremos a la rama de integración llamada develop)
 
 ![](2025-04-10-22-08-01.png)
+
+## Día 4
+
+![](2025-04-12-11-04-27.png)
+
+![](2025-04-12-12-26-36.png)
+
+## Día 6
+
+![](2025-04-16-01-00-15.png)
+![](2025-04-16-01-58-37.png)
