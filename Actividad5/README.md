@@ -45,9 +45,9 @@ Cuando el proyecto evoluciona en incrementos muy pequeños, tener un historial d
 
 ## Resolver conflictos en una fusión no-fast-forward
 
-![](2025-04-16-20-47-47.png)
+![alt](2025-04-16-20-47-47.png)
 
-![](2025-04-16-21-03-41.png)
+![alt](2025-04-16-21-03-41.png)
 
 ¿Qué pasos adicionales tuviste que tomar para resolver el conflicto?
 
@@ -89,7 +89,34 @@ La fusión automática es muy útil si la sabemos aprovechar en equipo al delega
 
 ![alt](2025-04-16-23-15-54.png)
 
-![](2025-04-16-23-17-13.png)
+![alt](2025-04-16-23-17-13.png)
+
+¿Cómo cambia la estrategia de fusión cuando colaboras con otras personas en un repositorio remoto?
+
+Cuando colaboras con otros en un repo remoto ya no basta con empujar tu merge: tienes que hacer el esfuerzo de entender lo que están haciendo los demás y de explicar con base en ello por qué sería bueno incluir tu cambio en la rama principal o de integración. De hecho, en un proyecto colaborativo probablemente no tengas los permisos para hacer una fusión directa. Entonces, la estrategia es proponer cambios comunicándonos efectivamente y promover la revisión del código antes de integrar los cambios. Esta estrategia en GitHub, que es la plataforma para colaborar en repos remotos, se maneja con el Pull Request.
+
+¿Qué problemas comunes pueden surgir al integrar ramas remotas?
+
+El mayor problema al integrar ramas es que surjan conflictos de integración, es decir, que la rama principal y la rama con nuestros cambios modifiquen las mismas partes del código. Esto puede por varios motivos y es parte del flujo natural del trabajo, pero lo que hay que hacer siempre para evitar conflictos innecesarios es tener nuestro repo local al día con lo último del repo remoto.
+
+Otra cosa que puede suceder es que quien tienen los permisos para decidir finalmente si va o no va nuestro cambio no esté pendiente. La persona a cargo debe ser responsable y muy activa.
 
 ### Ejercicio final: flujo de trabajo completo
 
+Desde la rama feature3:
+
+![alt](2025-04-17-10-32-58.png)
+
+Desde la rama principal luego de hacer la fusión squash:
+
+![alt](2025-04-17-10-35-25.png)
+
+En el historial se puede observar que la fusión de feature1 con --ff no genera un nuevo commit: la rama feature1 simplemente se incorpora directamente a main, como si siempre hubiera sido parte de ella. Esto hace el historial más lineal.
+
+En el caso de la fusión de feature2 con --no-ff sí genera un commit de fusión, y esto preserva la información de que fue una rama separada y desde qué punto partió. Muy útil para la trazabilidad de los cambios.
+
+Y en el caso de la fusión de feature3 con --squash vemos que ni siquiera hay una referencia a que los cambios vienen de una rama. Es como si los cambios se hubieran hecho directamente desde main, y de hecho así fue. Todos los cambios que se hicieron en la rama feature3 se copiaron al staging de la rama principal listos para hacer el commit y guardarlos desde main. La rama feature3 sigue existiendo, pero no figura como contribuyente de la rama principal. Esto mantiene un historial muy limpio y claro de los cambios, pero deja mucho que desear en cuanto a la trazabilidad del proyecto.
+
+Este es el resultado final de las tres contribuciones:
+
+![alt](2025-04-17-10-43-11.png)
