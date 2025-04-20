@@ -18,22 +18,25 @@ def convertir_palabra_a_numero(palabra):
 def time_description_to_hours(time_description: str):
     time_description = time_description.strip('"').lower()
     time_description = time_description.replace('y', ' ')
+    time_description = time_description.replace(',', ' ')
     time_description = time_description.strip()
 
     if time_description == 'media hora':
         total_time_in_hours = 0.5
     else:
-        pattern = re.compile(r'(?:(\w+)\s*horas?)?\s*(?:(\w+)\s*minutos?)?')
+        pattern = re.compile(r'(?:(\w+)\s*horas?)?\s*(?:(\w+)\s*minutos?)?\s*(?:(\w+)\s*segundos?)?')
         match = pattern.match(time_description)
 
         if match:
             hours_word = match.group(1) or "0"
             minutes_word = match.group(2) or "0"
+            seconds_word = match.group(3) or "0"
 
             hours = convertir_palabra_a_numero(hours_word)
             minutes = convertir_palabra_a_numero(minutes_word)
+            seconds = convertir_palabra_a_numero(seconds_word)
 
-            total_time_in_hours = hours + (minutes / 60)
+            total_time_in_hours = hours + (minutes / 60) + (seconds / 3600)
         else:
             raise ValueError(f"No se pudo interpretar la descripción del tiempo: {time_description}")
     return total_time_in_hours
