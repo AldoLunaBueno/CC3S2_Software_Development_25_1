@@ -12,5 +12,5 @@ class Belly:
     def esta_gruñendo(self):
         # El estómago gruñe si ha esperado al menos 1.5 horas y ha comido más de 10 pepinos
         if (self.pepinos_comidos < 0):
-            raise ValueError
+            raise Exception
         return self.tiempo_esperado >= 1.5 and self.pepinos_comidos > 10
