@@ -1,7 +1,5 @@
 name: CI/CD Pipeline for pytest and behave tests
-
 on: [push]
-
 jobs:
   build:
       runs-on: ubuntu-latest
@@ -18,8 +16,6 @@ jobs:
             python -m pip install --upgrade pip
             pip install -r requirements.txt
         - name: Test with pytest
-          run: |
-            pytest
+          run: pytest
         - name: Test with behave
-          run: |
-            behave
+          run: behave
