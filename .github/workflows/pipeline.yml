@@ -22,4 +22,5 @@ jobs:
       - name: Notify to Slack if fails through a webhook
         if: failure()
         run: |
-          curl -X POST -H 'Content-type: application/json' --data '{"text":"Hello, World!"}' https://hooks.slack.com/services/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
+          curl -X POST -H 'Content-type: application/json' --data '{"text":"Hello, World!"}' \
+          "${{ secrets.SLACK_WEBHOOK_URL }}"
