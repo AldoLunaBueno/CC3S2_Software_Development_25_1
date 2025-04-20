@@ -19,3 +19,9 @@ jobs:
         run: pytest
       - name: Test with behave
         run: behave
+      - name: Notify to Slack if fails through a webhook
+        if: failure()
+        run: |
+          curl -X POST -H 'Content-Type: application/json' \
+          --data '{"text": "El pipeline falló en el repo ${{ github.repository }}.\nCommit: ${{ github.sha }}\nAutor: ${{ github.actor }}"}' \
+          https://hooks.slack.com/services/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
