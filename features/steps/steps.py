@@ -1,7 +1,7 @@
 from behave import given, when, then
 from src.parsers import time_description_to_hours
 
-@given('que he comido {cukes:d} pepinos')
+@given('que he comido {cukes:g} pepinos')
 def step_given_eaten_cukes(context, cukes):
     context.belly.comer(cukes)
 
