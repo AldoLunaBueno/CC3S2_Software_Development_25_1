@@ -23,5 +23,5 @@ jobs:
         if: failure()
         run: |
           curl -X POST -H 'Content-Type: application/json' \
-          --data '{"text": "El pipeline falló en el repo ${{ github.repository }}.\nCommit: ${{ github.sha }}\nAutor: ${{ github.actor }}"}' \
-          https://hooks.slack.com/services/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
+          --data "{\"text\": \"El pipeline falló en el repo ${{ github.repository }}.\nCommit: ${{ github.sha }}\nAutor: ${{ github.actor }}\"}" \
+          https://hooks.slack.com/services/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
