@@ -11,8 +11,8 @@ from src.parsers import time_description_to_hours
     ("1 hora, 30 minutos y 45 segundos", 1.5125),
     ("media hora", 0.5),
     ("2 horas 15 minutos", 2.25),
-    ("45 segundos", 0.0125),
+    ("dos horas y treinta minutos", 2.5),
+    ("45 segundos", 0.0125)
 ])
 def test_convertir_tiempo_a_horas(time_description, expected_time):
-    assert abs(time_description_to_hours(time_description) - expected_time
-) < 0.0001
+    assert abs(time_description_to_hours(time_description) - expected_time) < 0.0001
