@@ -17,8 +17,10 @@ jobs:
           pip install -r requirements.txt
       - name: Test with pytest
         run: pytest
-      - name: Test with behave
-        run: behave
+      - name: Test with behave in spanish
+        run: behave -t @spanish
+      - name: Test with behave in english
+        run: behave -t @english
       - name: Notify to Slack if fails through a webhook
         if: failure()
         run: |
