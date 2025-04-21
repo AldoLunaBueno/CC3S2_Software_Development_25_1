@@ -27,15 +27,7 @@ def convert_word_to_number_english(word: int|str):
             "thirty": 30, "forty": 40, "fifty": 50, "sixty": 60, "seventy": 70,
             "eighty": 80, "ninety": 90, "half": 0.5
         }
-    return numbers.get(word.lower(), 0)
-
-def time_description_to_hours(time_description: str, language = "spanish"):
-    if language == "spanish":
-        return time_description_to_hours_spanish(time_description)
-    elif language == "english":
-        return time_description_to_hours_english(time_description)
-        
-    
+    return numbers.get(word.lower(), 0)      
 
 def time_description_to_hours_spanish(time_description: str):
     time_description = time_description.strip('"').lower()
@@ -68,20 +60,20 @@ def time_description_to_hours_english(time_description: str):
 
     pattern = re.compile(r'(\w+)\s*(hour[s]?|minute[s]?|second[s]?)')
     parts = re.findall(pattern, time_description)
-    total_time_in_hours = 0
+    total_time_in_seconds = 0
     if parts:        
         for word, unit in parts:
             value = convert_word_to_number_english(word)
             if "hour" in unit:
-                total_time_in_hours += value
+                total_time_in_seconds += value
             elif "minute" in unit:
-                total_time_in_hours += value / 60
+                total_time_in_seconds += value / 60
             elif "second" in unit:
-                total_time_in_hours += value / 3600
+                total_time_in_seconds += value / 3600
     else:
         raise ValueError
     
-    return total_time_in_hours
+    return total_time_in_seconds
 
 def time_description_to_hours(time_description: str, language = "spanish"):
     if "spanish" == language:
@@ -94,4 +86,6 @@ def time_description_to_hours(time_description: str, language = "spanish"):
             total_time_in_hours = time_description_to_hours_english(time_description)
         except ValueError:
             raise ValueError(f"No se pudo interpretar la descripción del tiempo: {time_description}")
+    else:
+        raise ValueError
     return total_time_in_hours

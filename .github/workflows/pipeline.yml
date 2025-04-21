@@ -28,3 +28,5 @@ jobs:
         run: |
           curl -X POST -H 'Content-type: application/json' --data '{"text": "El pipeline falló en el repo ${{ github.repository }}.\nCommit: ${{ github.sha }}\nAutor: ${{ github.actor }}"}' \
           "${{ secrets.SLACK_WEBHOOK_URL }}"
+      - name: Get coverage
+        run: pytest --cov=src --cov-branch --cov-report=term
