@@ -18,9 +18,9 @@ jobs:
       - name: Test with pytest
         run: pytest
       - name: Test with behave in spanish
-        run: behave -t spanish -skip
+        run: behave -t spanish -skip --no-capture
       - name: Test with behave in english
-        run: behave -t english -skip
+        run: behave -t english -skip --no-capture
       - name: Stress test with behave 
         run: behave -t stress -skip --no-capture
       - name: Notify to Slack if fails through a webhook

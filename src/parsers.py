@@ -27,7 +27,7 @@ def convert_word_to_number_english(word: int|str):
             "thirty": 30, "forty": 40, "fifty": 50, "sixty": 60, "seventy": 70,
             "eighty": 80, "ninety": 90, "half": 0.5
         }
-        return numbers.get(word.lower(), 0)
+    return numbers.get(word.lower(), 0)
 
 def time_description_to_hours(time_description: str, language = "spanish"):
     if language == "spanish":
@@ -42,24 +42,19 @@ def time_description_to_hours_spanish(time_description: str):
     time_description = time_description.replace('y', ' ')
     time_description = time_description.replace(',', ' ')
     time_description = time_description.strip()
-
-    if "media hora" == time_description:
-        total_time_in_hours = 0.5
-        return total_time_in_hours
         
-    pattern = re.compile(r'(?:(\w+)\s*horas?)?\s*(?:(\w+)\s*minutos?)?\s*(?:(\w+)\s*segundos?)?')
-    match = pattern.match(time_description)
-
-    if match:
-        hours_word = match.group(1) or "0"
-        minutes_word = match.group(2) or "0"
-        seconds_word = match.group(3) or "0"
-
-        hours = convert_word_to_number_spanish(hours_word)
-        minutes = convert_word_to_number_spanish(minutes_word)
-        seconds = convert_word_to_number_spanish(seconds_word)
-
-        total_time_in_hours = hours + (minutes / 60) + (seconds / 3600)
+    pattern = re.compile(r'(\w+)\s*(hora[s]?|minuto[s]?|segundo[s]?)')
+    parts = re.findall(pattern, time_description)
+    total_time_in_hours = 0
+    if parts:        
+        for word, unit in parts:
+            value = convert_word_to_number_spanish(word)
+            if "hora" in unit:
+                total_time_in_hours += value
+            elif "minuto" in unit:
+                total_time_in_hours += value / 60
+            elif "segundo" in unit:
+                total_time_in_hours += value / 3600
     else:
         raise ValueError
     
@@ -70,24 +65,19 @@ def time_description_to_hours_english(time_description: str):
     time_description = time_description.replace('and', ' ')
     time_description = time_description.replace(',', ' ')
     time_description = time_description.strip()
-    
-    if "half hour" == time_description:
-        total_time_in_hours = 0.5
-        return total_time_in_hours
 
-    pattern = re.compile(r'(?:(\w+)\s*hours?)?\s*(?:(\w+)\s*minutes?)?\s*(?:(\w+)\s*seconds?)?')
-    match = pattern.match(time_description)
-
-    if match:
-        hours_word = match.group(1) or "0"
-        minutes_word = match.group(2) or "0"
-        seconds_word = match.group(3) or "0"
-
-        hours = convert_word_to_number_english(hours_word)
-        minutes = convert_word_to_number_english(minutes_word)
-        seconds = convert_word_to_number_english(seconds_word)
-
-        total_time_in_hours = hours + (minutes / 60) + (seconds / 3600)
+    pattern = re.compile(r'(\w+)\s*(hour[s]?|minute[s]?|second[s]?)')
+    parts = re.findall(pattern, time_description)
+    total_time_in_hours = 0
+    if parts:        
+        for word, unit in parts:
+            value = convert_word_to_number_english(word)
+            if "hour" in unit:
+                total_time_in_hours += value
+            elif "minute" in unit:
+                total_time_in_hours += value / 60
+            elif "second" in unit:
+                total_time_in_hours += value / 3600
     else:
         raise ValueError
     

@@ -47,6 +47,7 @@ def step_then_belly_should_not_growl(context: Context):
     
 @then('mi estómago debería gruñir o no dependiendo del tiempo')
 def step_then_belly_conditional_growl(context: Context):
+    print(f"  Random time {context.random_time}")
     if context.random_time > 1.5:
         assert context.belly.esta_gruñendo(), "Se esperaba que el estómago gruñera, pero no lo hizo."
     else:
@@ -54,9 +55,8 @@ def step_then_belly_conditional_growl(context: Context):
 
 @then('debería ocurrir un error')
 def step_when_invalid_value_then_error(context: Context):
-    time = context.time
     try:
         context.belly.esta_gruñendo()
         assert False, "Se esperaba un ValueError"
     except ValueError:
-        print("El test fallo de forma controlada")
+        print("  El test fallo de forma controlada")
