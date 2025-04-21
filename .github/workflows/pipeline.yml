@@ -21,6 +21,8 @@ jobs:
         run: behave -t spanish -skip
       - name: Test with behave in english
         run: behave -t english -skip
+      - name: Stress test with behave 
+        run: behave -t stress -skip --no-capture
       - name: Notify to Slack if fails through a webhook
         if: failure()
         run: |

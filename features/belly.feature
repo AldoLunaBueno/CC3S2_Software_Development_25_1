@@ -78,3 +78,9 @@ Característica: Comportamiento del Estómago
     Dado que he comido 101 pepinos
     Cuando espero 2 horas
     Entonces debería ocurrir un error
+
+  @stress
+  Escenario: Comer 1000 pepinos y esperar 10 horas
+    Dado que he comido 1000 pepinos
+    Cuando espero 10 horas
+    Entonces mi estómago debería gruñir

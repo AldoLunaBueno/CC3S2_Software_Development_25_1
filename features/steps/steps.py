@@ -2,6 +2,7 @@ from behave import given, when, then
 from behave.runner import Context
 from src.parsers import time_description_to_hours
 import random
+import time
 
 @given('que he comido {cukes:g} pepinos')
 def step_given_eaten_cukes(context: Context, cukes):
@@ -22,23 +23,34 @@ def step_when_wait_time_description(context: Context, time_description):
         total_time_in_hours = time_description_to_hours(time_description, "spanish")
     elif "english" in tags:
         total_time_in_hours = time_description_to_hours(time_description, "english")
+    elif "stress" in tags:
+        total_time_in_hours = time_description_to_hours(time_description)
     context.belly.esperar(total_time_in_hours)
     context.time = total_time_in_hours
 
 @then('mi estómago debería gruñir')
 def step_then_belly_should_growl(context: Context):
-    assert context.belly.esta_gruñendo(), "Se esperaba que el estómago gruñera, pero no lo hizo."
+    if "stress" in context.scenario.tags:
+        start = time.time()
+        assert context.belly.esta_gruñendo(stress_test = True), "Se esperaba que el estómago gruñera, pero no lo hizo."
+        end = time.time()
+        print(f"  [STRESS] Took {(end-start):0.3f} seconds")
+    else:
+        assert context.belly.esta_gruñendo(), "Se esperaba que el estómago gruñera, pero no lo hizo."
 
 @then('mi estómago no debería gruñir')
 def step_then_belly_should_not_growl(context: Context):
-    assert not context.belly.esta_gruñendo(), "Se esperaba que el estómago no gruñera, pero lo hizo."
+    if "stress" in context.scenario.tags:
+        assert context.belly.esta_gruñendo(stress_test = True), "Se esperaba que el estómago no gruñera, pero lo hizo."
+    else:
+        assert not context.belly.esta_gruñendo(), "Se esperaba que el estómago no gruñera, pero lo hizo."
     
 @then('mi estómago debería gruñir o no dependiendo del tiempo')
 def step_then_belly_conditional_growl(context: Context):
     if context.random_time > 1.5:
         assert context.belly.esta_gruñendo(), "Se esperaba que el estómago gruñera, pero no lo hizo."
     else:
-        assert not context.belly.esta_gruñendo(), "Se esperaba que el estómago no gruñera, pero lo hizo."
+        assert not context.belly.esta_gruñendo(stress_test = True), "Se esperaba que el estómago no gruñera, pero lo hizo."
 
 @then('debería ocurrir un error')
 def step_when_invalid_value_then_error(context: Context):
