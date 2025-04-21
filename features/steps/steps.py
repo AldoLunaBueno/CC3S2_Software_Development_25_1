@@ -23,6 +23,7 @@ def step_when_wait_time_description(context: Context, time_description):
     elif "english" in tags:
         total_time_in_hours = time_description_to_hours(time_description, "english")
     context.belly.esperar(total_time_in_hours)
+    context.time = total_time_in_hours
 
 @then('mi estómago debería gruñir')
 def step_then_belly_should_growl(context: Context):
@@ -38,3 +39,12 @@ def step_then_belly_conditional_growl(context: Context):
         assert context.belly.esta_gruñendo(), "Se esperaba que el estómago gruñera, pero no lo hizo."
     else:
         assert not context.belly.esta_gruñendo(), "Se esperaba que el estómago no gruñera, pero lo hizo."
+
+@then('debería ocurrir un error')
+def step_when_invalid_value_then_error(context: Context):
+    time = context.time
+    try:
+        context.belly.esta_gruñendo()
+        assert False, "Se esperaba un ValueError"
+    except ValueError:
+        print("El test fallo de forma controlada")
