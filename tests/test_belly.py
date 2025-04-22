@@ -1,5 +1,6 @@
 import pytest
 from src.belly import Belly
+from pytest_mock import mocker, MockerFixture
 
 def test_pepinos_fraccionarios_gruñir():
     belly = Belly()
@@ -44,3 +45,14 @@ def test_belly_predict_growl():
     belly.comer(12)
     belly.esperar(1.5)
     assert belly.predict_growl() == True
+
+def test_time_to_eat_calls_clock_once_mock(mocker: MockerFixture):
+    fake_clock = mocker.Mock(return_value=10000)
+    belly = Belly(clock_service=fake_clock)
+    belly.time_to_eat()
+    fake_clock.assert_called_once()
+    
+def test_time_to_eat_returns_value_stub(mocker: MockerFixture):
+    fake_clock = mocker.Mock(return_value=10000)
+    belly = Belly(clock_service=fake_clock)
+    assert belly.time_to_eat() == 10000
