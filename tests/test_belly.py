@@ -30,3 +30,11 @@ def test_pepinos_restantes():
     belly = Belly()
     belly.comer(15)
     assert belly.pepinos_comidos() == 15
+    
+def test_stress_esta_gruñendo():
+    belly = Belly()
+    belly.comer(1000)
+    try:
+        belly.esta_gruñendo(stress_test=True)
+    except Exception:
+        assert False, "El método esta_gruñendo() no se puede usar en modo de prueba"
