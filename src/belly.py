@@ -21,3 +21,6 @@ class Belly:
     
     def pepinos_comidos(self):
         return self._pepinos_comidos
+    
+    def predict_growl(self):
+        return self._tiempo_esperado >= 1.5 and self._pepinos_comidos > 10
