@@ -64,3 +64,7 @@ def step_when_invalid_value_then_error(context: Context):
 @then('debería haber comido {cukes:g} pepinos')
 def step_given_eaten_cukes_then_eaten_the_same(context: Context, cukes):
     assert context.belly.pepinos_comidos() == cukes
+    
+@then('debería predecir que mi estómago va a gruñir')
+def step_given_eaten_cukes_then_predict_growl(context: Context):
+    assert context.belly.predict_growl()

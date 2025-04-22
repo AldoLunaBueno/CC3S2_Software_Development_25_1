@@ -38,3 +38,9 @@ def test_stress_esta_gruñendo():
         belly.esta_gruñendo(stress_test=True)
     except Exception:
         assert False, "El método esta_gruñendo() no se puede usar en modo de prueba"
+        
+def test_belly_predict_growl():
+    belly = Belly()
+    belly.comer(12)
+    belly.esperar(1.5)
+    assert belly.predict_growl() == True
