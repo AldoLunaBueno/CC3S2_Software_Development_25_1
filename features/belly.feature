@@ -131,3 +131,21 @@ Característica: Comportamiento del Estómago
     Dado que he comido 12 pepinos
     Cuando espero 1.5 horas
     Entonces debería predecir que mi estómago va a gruñir
+
+  @criterio_nuevo
+  Escenario: Ver cuántos pepinos puedo comer antes de que el estómago gruña
+    Dado que he comido 8 pepinos
+    Cuando pregunto cuántos pepinos más puedo comer
+    Entonces debería decirme que puedo comer 2 pepinos más
+
+  @criterio_nuevo
+  Escenario: Ver cuántos pepinos puedo comer antes de que el estómago gruña
+    Dado que he comido 10 pepinos
+    Cuando pregunto cuántos pepinos más puedo comer
+    Entonces debería decirme que si como un pepino más voy a gruñir
+
+  @criterio_nuevo
+  Escenario: Ver cuántos pepinos puedo comer antes de que el estómago gruña
+    Dado que he comido 11 pepinos
+    Cuando pregunto cuántos pepinos más puedo comer
+    Entonces debería decirme que ya es tarde, voy a gruñir

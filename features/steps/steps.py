@@ -7,6 +7,7 @@ import time
 @given('que he comido {cukes:g} pepinos')
 def step_given_eaten_cukes(context: Context, cukes):
     context.belly.comer(cukes)
+    context.eaten_cukes = cukes
 
 @when('espero un tiempo aleatorio entre {time_description_1} y {time_description_2}')
 def step_when_wait_time_description(context, time_description_1, time_description_2):
@@ -27,6 +28,10 @@ def step_when_wait_time_description(context: Context, time_description):
         total_time_in_hours = time_description_to_hours(time_description)
     context.belly.esperar(total_time_in_hours)
     context.time = total_time_in_hours
+
+@when('pregunto cuántos pepinos más puedo comer')
+def step_when_irrelevant(context: Context):
+    pass
 
 @then('mi estómago debería gruñir')
 def step_then_belly_should_growl(context: Context):
@@ -68,3 +73,15 @@ def step_given_eaten_cukes_then_eaten_the_same(context: Context, cukes):
 @then('debería predecir que mi estómago va a gruñir')
 def step_given_eaten_cukes_then_predict_growl(context: Context):
     assert context.belly.predict_growl()
+    
+@then('debería decirme que puedo comer {remaining_cukes:g} pepinos más')
+def step_given_eaten_cukes_then_remaining_cukes(context: Context, remaining_cukes):
+    assert context.belly.remaining_cukes_avoiding_growl() == remaining_cukes
+    
+@then('debería decirme que si como un pepino más voy a gruñir')
+def step_given_eaten_cukes_max_then_one_more_growl(context: Context):
+    assert context.belly.remaining_cukes_avoiding_growl() == 0
+    
+@then('debería decirme que ya es tarde, voy a gruñir')
+def step_give_so_eaten_cukes_then_gonna_growl(context: Context):
+    assert context.belly.remaining_cukes_avoiding_growl() == -1
