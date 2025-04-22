@@ -212,3 +212,62 @@ def test_vaciar_carrito():
     # Assert
     assert carrito.contar_items() == 0
     assert carrito.calcular_total() == 0
+
+
+def test_descuento_condicional_si_aplicar():
+    """
+    AAA:
+    Arrange: Se crea un carrito, se agregan algunos items
+        que sumen un monto total mayor a un mínimo,
+        y se establecen el porcentaje y el valor mínimo.
+    Act: Se llama al método del descuento condicional.
+    Assert: Se verifica que el descuento condicional fue aplicado.
+    """
+    # Arrange
+    carrito = Carrito()
+    precio1 = 800.0
+    precio2 = 300.0
+    producto1 = ProductoFactory(nombre="A", precio=precio1)
+    carrito.agregar_producto(producto1, cantidad=1)
+    producto2 = ProductoFactory(nombre="B", precio=precio2)
+    carrito.agregar_producto(producto2, cantidad=1)
+    total = precio1 + precio2
+    porcentaje = 15
+    minimo = 1000
+
+    # Act
+    total_descontado = carrito.aplicar_descuento_condicional(
+        porcentaje, minimo)
+
+    # Assert
+    assert total_descontado == total - total * porcentaje / 100
+
+
+def test_descuento_condicional_no_aplicar():
+    """
+    AAA:
+    Arrange: Se crea un carrito, se agregan algunos items
+        que sumen un monto total menor o igual a un mínimo,
+        y se establecen el porcentaje y el valor mínimo.
+    Act: Se llama al método del descuento condicional.
+    Assert: Se verifica que el descuento condicional no fue aplicado,
+        es decir, que el total sigue siendo el mismo.
+    """
+    # Arrange
+    carrito = Carrito()
+    precio1 = 600.0
+    precio2 = 300.0
+    producto1 = ProductoFactory(nombre="A", precio=precio1)
+    carrito.agregar_producto(producto1, cantidad=1)
+    producto2 = ProductoFactory(nombre="B", precio=precio2)
+    carrito.agregar_producto(producto2, cantidad=1)
+    total = precio1 + precio2
+    porcentaje = 15
+    minimo = 1000
+
+    # Act
+    total_descontado = carrito.aplicar_descuento_condicional(
+        porcentaje, minimo)
+
+    # Assert
+    assert total_descontado == total
