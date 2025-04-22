@@ -1,9 +1,11 @@
 import time
+from src.clock import get_current_time
 
 class Belly:
-    def __init__(self):
+    def __init__(self, clock_service = get_current_time):
         self._pepinos_comidos = 0
         self._tiempo_esperado = 0
+        self._clock = clock_service # Dependency Inyection
 
     def comer(self, pepinos: int):
         self._pepinos_comidos += pepinos
@@ -31,3 +33,5 @@ class Belly:
         else:
             return -1
         
+    def time_to_eat(self):
+        return self._clock()
