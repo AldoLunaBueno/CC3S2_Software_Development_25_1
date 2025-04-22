@@ -60,3 +60,7 @@ def step_when_invalid_value_then_error(context: Context):
         assert False, "Se esperaba un ValueError"
     except ValueError:
         print("  El test fallo de forma controlada")
+
+@then('debería haber comido {cukes:g} pepinos')
+def step_given_eaten_cukes_then_eaten_the_same(context: Context, cukes):
+    assert context.belly.pepinos_comidos() == cukes
