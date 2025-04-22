@@ -1,5 +1,6 @@
 import pytest
-from src.parsers import time_description_to_hours
+from src.parsers import time_descr_to_h
+
 
 @pytest.mark.parametrize("time_description, expected_time", [
     ("1 hora", 1.0),
@@ -17,7 +18,7 @@ from src.parsers import time_description_to_hours
     ("45 segundos", 0.0125)
 ])
 def test_convertir_tiempo_a_horas(time_description, expected_time):
-    assert abs(time_description_to_hours(time_description) - expected_time) < 0.0001
+    assert abs(time_descr_to_h(time_description) - expected_time) < 0.0001
 
 
 @pytest.mark.parametrize("time_description, expected_time", [
@@ -33,18 +34,22 @@ def test_convertir_tiempo_a_horas(time_description, expected_time):
     ("45 minutes 5 seconds and 3 hours", 3.751388)
 ])
 def test_convertir_tiempo_a_horas_en_ingles(time_description, expected_time):
-    assert abs(time_description_to_hours(time_description, "english") - expected_time) < 0.0001
+    diff = time_descr_to_h(time_description, "english") - expected_time
+    assert abs(diff) < 0.0001
+
 
 @pytest.mark.parametrize("time_description", ["horas", "minutos"])
 def test_invalid_description_spanish(time_description):
     with pytest.raises(ValueError):
-        time_description_to_hours(time_description)
+        time_descr_to_h(time_description)
+
 
 @pytest.mark.parametrize("time_description", ["hours", "minutes"])
 def test_invalid_description_english(time_description):
     with pytest.raises(ValueError):
-        time_description_to_hours(time_description, "english")
-        
+        time_descr_to_h(time_description, "english")
+
+
 def test_unkown_language():
     with pytest.raises(ValueError):
-        time_description_to_hours("une heure", language = "unkown")
+        time_descr_to_h("une heure", language="unkown")

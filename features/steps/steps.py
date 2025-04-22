@@ -1,6 +1,6 @@
 from behave import given, when, then
 from behave.runner import Context
-from src.parsers import time_description_to_hours
+from src.parsers import time_descr_to_h
 import random
 import time
 
@@ -11,8 +11,8 @@ def step_given_eaten_cukes(context: Context, cukes):
 
 @when('espero un tiempo aleatorio entre {time_description_1} y {time_description_2}')
 def step_when_wait_time_description(context, time_description_1, time_description_2):
-    time_1 = time_description_to_hours(time_description_1)
-    time_2 = time_description_to_hours(time_description_2)
+    time_1 = time_descr_to_h(time_description_1)
+    time_2 = time_descr_to_h(time_description_2)
     random_time = random.uniform(time_1, time_2)
     context.random_time = random_time
     context.belly.esperar(random_time)
@@ -21,11 +21,11 @@ def step_when_wait_time_description(context, time_description_1, time_descriptio
 def step_when_wait_time_description(context: Context, time_description):
     tags = context.scenario.tags
     if "spanish" in tags:
-        total_time_in_hours = time_description_to_hours(time_description, "spanish")
+        total_time_in_hours = time_descr_to_h(time_description, "spanish")
     elif "english" in tags:
-        total_time_in_hours = time_description_to_hours(time_description, "english")
+        total_time_in_hours = time_descr_to_h(time_description, "english")
     elif "stress" in tags:
-        total_time_in_hours = time_description_to_hours(time_description)
+        total_time_in_hours = time_descr_to_h(time_description)
     context.belly.esperar(total_time_in_hours)
     context.time = total_time_in_hours
 

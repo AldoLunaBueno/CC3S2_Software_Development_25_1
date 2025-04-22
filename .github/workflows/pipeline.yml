@@ -16,7 +16,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
       - name: Check code quality with flake8
-        run: flake src tests --max-line-length
+        run: flake8 src tests --max-line-length=80
       - name: Test with pytest
         run: pytest
       - name: Test with behave in spanish
