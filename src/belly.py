@@ -24,3 +24,10 @@ class Belly:
     
     def predict_growl(self):
         return self._tiempo_esperado >= 1.5 and self._pepinos_comidos > 10
+    
+    def remaining_cukes_avoiding_growl(self):
+        if self._pepinos_comidos <= 10:
+            return 10 - self._pepinos_comidos
+        else:
+            return -1
+        
