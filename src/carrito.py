@@ -28,22 +28,33 @@ class Carrito:
     def __init__(self):
         self.items: List[ItemCarrito] = []
 
-    def agregar_producto(self, producto, cantidad=1):
-        # Verifica el stock disponible
-        total_en_carrito = 0
+    def _buscar_item(self, producto):
         for item in self.items:
             if item.producto.nombre == producto.nombre:
-                total_en_carrito = item.cantidad
-                break
-        if total_en_carrito + cantidad > producto.stock:
+                return item
+        return None
+
+    def agregar_producto(self, producto, cantidad=1):
+        """
+        Agrega un producto al carrito verificando que la cantidad \
+        no exceda el stock disponible.
+
+        Args:
+            producto (Producto): Producto a agregar.
+            cantidad (int): Cantidad a agregar.
+        Raises:
+            ValueError: Si la cantidad total excede el stock del producto.
+        """
+        item = self._buscar_item(producto)
+        cantidad_actual = item.cantidad if item else 0
+
+        if cantidad_actual + cantidad > producto.stock:
             raise ValueError("Cantidad a agregar excede el stock disponible")
 
-        # Si el producto ya existe, incrementa la cantidad
-        for item in self.items:
-            if item.producto.nombre == producto.nombre:
-                item.cantidad += cantidad
-                return
-        self.items.append(ItemCarrito(producto, cantidad))
+        if item:
+            item.cantidad += cantidad
+        else:
+            self.items.append(ItemCarrito(producto, cantidad))
 
     def remover_producto(self, producto, cantidad=1):
         """
