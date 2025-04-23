@@ -22,4 +22,24 @@ El comando `git bisect` permite localizar el el commit exacto en donde se introd
 
 El gran desafío es que los colaboradores, ya sea por olvido o descuido, pueden incumplir alguna regla de la política de ramas. Somos humanos, podemos equivocarnos. Y estas equivocaciones generan conflictos, por ejemplo, al fusionar ramas. Podemos tener ramas con nombres que no son consistentes. Inluso se puede correr el riesgo de sobreescribir o eliminar ramas importantes sin revisión. Con respecto a los stashes, como solo se guardan localmente, es difícil que otro colaborador borre tus stashes, salvo que se trabaje a través de un mismo servidor compartido y accediendo con el mismo usuario. Lo que si puede pasar es que por descuido los stashes no se limpien (quizás se delegaron a un hook mal hecho) y se vayan acumulando los stashes de todos.
 
-## 
+## Ejercicios
+
+### Ejercicio 1. Renombrar ramas
+
+![alt](2025-04-23-04-50-44.png)
+
+![alt](2025-04-23-04-51-00.png)
+
+### Ejercicio 2. Ampliar gestión de git diff
+
+### Ejercicio 3. Gestionar hook pre-commit
+
+![alt](2025-04-23-05-07-34.png)
+
+![alt](2025-04-23-05-20-54.png)
+
+### Ejercicio 4. Merge automático
+
+![alt](2025-04-23-05-29-57.png)
+
+![alt](2025-04-23-05-30-32.png)

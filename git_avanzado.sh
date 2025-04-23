@@ -14,6 +14,7 @@
 # 9) Gestión de git diff (ver diferencias entre revisiones o ramas).
 # 10) Gestión de Hooks (listar, crear, editar y borrar hooks).
 # 11) Salir.
+# 12) Gestión de git merge (fusionar ramas)
 #
 # Requisitos: Se debe ejecutar dentro de un repositorio Git.
 #
@@ -42,6 +43,7 @@ function mostrar_menu_principal() {
     echo "9) Gestión de git diff"
     echo "10) Gestión de Hooks"
     echo "11) Salir"
+    echo "12) Gestión de git merge"
     echo -n "Seleccione una opción: "
 }
 
@@ -99,6 +101,7 @@ function gestionar_ramas() {
         echo "c) Cambiar a una rama existente"
         echo "d) Borrar una rama"
         echo "e) Volver al menú principal"
+        echo "f) Renombrar una rama"
         echo -n "Seleccione una opción: "
         read opcion_rama
         case "$opcion_rama" in
@@ -125,6 +128,16 @@ function gestionar_ramas() {
                 echo "Rama '$rama' borrada."
                 ;;
             e|E)
+                break
+                ;;
+            f|F)
+                echo -n "Ingrese el nombre de la rama actual: "
+                read rama
+                echo -n "Ingrese el nuevo nombre para la rama: "
+                read nueva_rama
+                git checkout "$rama"
+                git branch -m "$nueva_rama"
+                echo "Rama '$rama' renombrada a '$nueva_rama'"
                 break
                 ;;
             *)
@@ -283,6 +296,16 @@ function gestionar_diff() {
             d|D)
                 break
                 ;;
+            e|E)
+                echo -n "Ingrese el primer identificador (rama o commit): "
+                read id1
+                echo -n "Ingrese el segundo identificador (rama o commit): "
+                read id2
+                echo -n "Ingrese la ruta del archivo: "
+                read archivo
+                echo ""
+                git diff "$id1" "$id2" -- "$archivo"
+                ;;
             *)
                 echo "Opción no válida, intente de nuevo."
                 ;;
@@ -300,6 +323,7 @@ function gestionar_hooks() {
         echo "c) Editar un hook existente"
         echo "d) Borrar un hook"
         echo "e) Volver al menú principal"
+        echo "f) Instalar hook pre-commit para verificar documentación"
         echo -n "Seleccione una opción: "
         read opcion_hooks
         case "$opcion_hooks" in
@@ -343,11 +367,45 @@ function gestionar_hooks() {
             e|E)
                 break
                 ;;
+            f|F)
+                instalar_hook_documentacion
+                ;;
             *)
                 echo "Opción no válida, intente de nuevo."
                 ;;
         esac
     done
+}
+
+function instalar_hook_documentacion() {
+    echo "Instalando hook pre-commit para verificar comentarios de documentación..."
+    hook_path=".git/hooks/pre-commit"
+
+    cat > "$hook_path" << 'EOF'
+#!/bin/bash
+files=$(git diff --cached --name-only --diff-filter=ACM | grep -E '\.c$|\.h$|\.js$')
+for file in $files; do
+    if ! grep -q "//" "$file"; then
+        echo "Error: El archivo '$file' no contiene comentarios de documentación."
+        exit 1
+    fi
+done
+exit 0
+EOF
+
+    chmod +x "$hook_path"
+    echo "Hook pre-commit instalado correctamente."
+}
+
+function gestionar_merge() {
+    echo -n "Ingrese el nombre de la rama que desea fusionar: "
+    read rama_origen
+    git merge -X theirs "$rama_origen"
+    if [[ $? -eq 0 ]]; then
+        echo "Merge completado automáticamente utilizando la estrategia 'theirs'."
+    else
+        echo "Ocurrió un conflicto que no pudo resolverse automáticamente."
+    fi
 }
 
 # Bucle principal del menú
@@ -388,6 +446,9 @@ while true; do
         11)
             echo "Saliendo del script."
             exit 0
+            ;;
+        12)
+            gestionar_merge
             ;;
         *)
             echo "Opción no válida, intente de nuevo."
