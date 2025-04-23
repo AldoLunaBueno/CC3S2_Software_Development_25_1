@@ -1,1 +1,1 @@
-# ej-pd2-interactive-script
+# PD2: Script Interactivo
