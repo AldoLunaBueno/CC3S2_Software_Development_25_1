@@ -61,17 +61,20 @@ def test_hash_service_es_llamado_al_agregar_usuario():
     mock_hash_service.hash.assert_called_once_with(password)
 
 
-def test_no_se_puede_agregar_usuario_existente_stub():
-    # Este stub forzará que user_exists devuelva True
-    class StubUserManager(UserManager):
-        def user_exists(self, username):
-            return True
+# Esta prueba ya no tiene sentido porque ahora el repo se encarga de evitar
+# la duplicación de usuarios
 
-    stub_manager = StubUserManager()
-    with pytest.raises(UserAlreadyExistsError) as exc:
-        stub_manager.add_user("cualquier", "1234")
+# def test_no_se_puede_agregar_usuario_existente_stub():
+#     # Este stub forzará que user_exists devuelva True
+#     class StubUserManager(UserManager):
+#         def user_exists(self, username):
+#             return True
 
-    assert "ya existe" in str(exc.value)
+#     stub_manager = StubUserManager()
+#     with pytest.raises(UserAlreadyExistsError) as exc:
+#         stub_manager.add_user("cualquier", "1234")
+
+#     assert "ya existe" in str(exc.value)
 
 
 class InMemoryUserRepository:
