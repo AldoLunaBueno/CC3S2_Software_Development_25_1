@@ -1,16 +1,19 @@
 # src/carrito.py
+from typing import List
+
 
 class Producto:
-    def __init__(self, nombre, precio):
+    def __init__(self, nombre, precio, stock):
         self.nombre = nombre
         self.precio = precio
+        self.stock = stock
 
     def __repr__(self):
-        return f"Producto({self.nombre}, {self.precio})"
+        return f"Producto({self.nombre}, {self.precio}, {self.stock})"
 
 
 class ItemCarrito:
-    def __init__(self, producto, cantidad=1):
+    def __init__(self, producto: Producto, cantidad=1):
         self.producto = producto
         self.cantidad = cantidad
 
@@ -23,15 +26,20 @@ class ItemCarrito:
 
 class Carrito:
     def __init__(self):
-        self.items = []
+        self.items: List[ItemCarrito] = []
 
-    def agregar_producto(self, producto, cantidad=1):
+    def agregar_producto(self, producto: Producto, cantidad=1):
         """
         Agrega un producto al carrito.
         Si el producto ya existe, incrementa la cantidad.
         """
+        if cantidad > producto.stock:
+            raise Exception
+
         for item in self.items:
             if item.producto.nombre == producto.nombre:
+                if cantidad + item.cantidad > producto.stock:
+                    raise Exception
                 item.cantidad += cantidad
                 return
         self.items.append(ItemCarrito(producto, cantidad))
