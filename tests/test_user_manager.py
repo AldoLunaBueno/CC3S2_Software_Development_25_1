@@ -1,4 +1,5 @@
-from user_manager import UserManager
+import pytest
+from user_manager import UserManager, UserAlreadyExistsError
 from unittest.mock import MagicMock
 
 
@@ -58,3 +59,16 @@ def test_hash_service_es_llamado_al_agregar_usuario():
 
     # Assert
     mock_hash_service.hash.assert_called_once_with(password)
+
+
+def test_no_se_puede_agregar_usuario_existente_stub():
+    # Este stub forzará que user_exists devuelva True
+    class StubUserManager(UserManager):
+        def user_exists(self, username):
+            return True
+
+    stub_manager = StubUserManager()
+    with pytest.raises(UserAlreadyExistsError) as exc:
+        stub_manager.add_user("cualquier", "1234")
+
+    assert "ya existe" in str(exc.value)
