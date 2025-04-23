@@ -3,7 +3,7 @@ from typing import List
 
 
 class Producto:
-    def __init__(self, nombre, precio, stock):
+    def __init__(self, nombre, precio, stock=1):
         self.nombre = nombre
         self.precio = precio
         self.stock = stock
@@ -28,18 +28,19 @@ class Carrito:
     def __init__(self):
         self.items: List[ItemCarrito] = []
 
-    def agregar_producto(self, producto: Producto, cantidad=1):
-        """
-        Agrega un producto al carrito.
-        Si el producto ya existe, incrementa la cantidad.
-        """
-        if cantidad > producto.stock:
-            raise Exception
-
+    def agregar_producto(self, producto, cantidad=1):
+        # Verifica el stock disponible
+        total_en_carrito = 0
         for item in self.items:
             if item.producto.nombre == producto.nombre:
-                if cantidad + item.cantidad > producto.stock:
-                    raise Exception
+                total_en_carrito = item.cantidad
+                break
+        if total_en_carrito + cantidad > producto.stock:
+            raise ValueError("Cantidad a agregar excede el stock disponible")
+
+        # Si el producto ya existe, incrementa la cantidad
+        for item in self.items:
+            if item.producto.nombre == producto.nombre:
                 item.cantidad += cantidad
                 return
         self.items.append(ItemCarrito(producto, cantidad))
