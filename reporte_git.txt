@@ -1,0 +1,27 @@
+=== Estado del repositorio ===
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   git_avanzado.sh
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	reporte_git.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+=== Ramas existentes ===
+  feature/authentication
+* main
+
+=== Últimos 5 commits ===
+78da320 Añadir ejercicios hasta el 4
+c7f3f7a Código sin comentario debería ser rechazado por el hook
+0376e6c Add answers to questions in README.md
+fb7ab76 First Commit
+57025d9 Initial commit
+
+=== Lista de stashes ===

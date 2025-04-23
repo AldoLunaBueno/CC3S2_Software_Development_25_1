@@ -15,6 +15,7 @@
 # 10) Gestión de Hooks (listar, crear, editar y borrar hooks).
 # 11) Salir.
 # 12) Gestión de git merge (fusionar ramas)
+# 13) Generar reporte (estado del repositorio)
 #
 # Requisitos: Se debe ejecutar dentro de un repositorio Git.
 #
@@ -44,6 +45,7 @@ function mostrar_menu_principal() {
     echo "10) Gestión de Hooks"
     echo "11) Salir"
     echo "12) Gestión de git merge"
+    echo "13) Generar reporte"
     echo -n "Seleccione una opción: "
 }
 
@@ -408,6 +410,24 @@ function gestionar_merge() {
     fi
 }
 
+function generar_reporte() {
+    archivo="reporte_git.txt"
+    echo "=== Estado del repositorio ===" > "$archivo"
+    git status >> "$archivo"
+
+    echo -e "\n=== Ramas existentes ===" >> "$archivo"
+    git branch >> "$archivo"
+
+    echo -e "\n=== Últimos 5 commits ===" >> "$archivo"
+    git log -n 5 --oneline >> "$archivo"
+
+    echo -e "\n=== Lista de stashes ===" >> "$archivo"
+    git stash list >> "$archivo"
+
+    echo "Reporte generado en '$archivo'."
+}
+
+
 # Bucle principal del menú
 while true; do
     mostrar_menu_principal
@@ -449,6 +469,9 @@ while true; do
             ;;
         12)
             gestionar_merge
+            ;;
+        13)
+            generar_reporte
             ;;
         *)
             echo "Opción no válida, intente de nuevo."
