@@ -123,3 +123,7 @@ class Carrito:
             return sorted(self.items, key=lambda item: item.producto.precio)
         else:
             raise Exception
+
+    def calcular_impuestos(self, porcentaje):
+        total = self.calcular_total()
+        return total * (porcentaje / 100)
