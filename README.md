@@ -1,1 +1,1 @@
-# ej-shopping-cart
+# Shoppping Cart (carrito de compras)
