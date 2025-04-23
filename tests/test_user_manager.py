@@ -1,4 +1,3 @@
-import pytest
 from user_manager import UserManager, UserAlreadyExistsError
 from unittest.mock import MagicMock
 
