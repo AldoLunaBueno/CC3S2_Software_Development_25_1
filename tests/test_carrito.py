@@ -271,3 +271,55 @@ def test_descuento_condicional_no_aplicar():
 
     # Assert
     assert total_descontado == total
+
+
+def test_agregar_producto_bajo_limite_stock():
+    """
+    AAA:
+    Arrange: Se crea un carrito, se establece un stock y se crea el
+        producto con este stock.
+    Act y Assert: Se ejecuta el método agregar_producto() agregando
+        tantos productos como sea posible según el stock establecido,
+        y se verifica que no se lance ninguna excepción en el proceso
+        y que al final la cantidad de items en el carrito sea igual
+        que el stock establecido en un principio.
+    """
+    # Arrange
+    carrito = Carrito()
+    stock1 = 5
+    producto1 = ProductoFactory(nombre="A", precio=200.00, stock=stock1)
+
+    # Act y Assert
+    try:
+        carrito.agregar_producto(producto1, cantidad=2)
+        carrito.agregar_producto(producto1, cantidad=2)
+        carrito.agregar_producto(producto1, cantidad=1)
+        assert carrito.contar_items() == stock1
+    except Exception:
+        assert False, "Se puede agregar al carrito \
+            tantos productos de un mismo tipo como el stock \
+            de este producto."
+
+
+def test_agregar_producto_sobre_limite_stock():
+    """
+    AAA:
+    Arrange: Se crea un carrito, se establece un stock y se crea el
+        producto con este stock.
+    Act y Assert: Se ejecuta el método agregar_producto() agregando
+        más productos de los que son posibles según el stock establecido,
+        y se verifica que se lance una excepción cuando esto pase
+        y que al final la cantidad de items en el carrito no sea mayor
+        que el stock establecido en un principio.
+    """
+    # Arrange
+    carrito = Carrito()
+    stock1 = 5
+    producto1 = ProductoFactory(nombre="A", precio=200.00, stock=stock1)
+
+    # Act y Assert
+    carrito.agregar_producto(producto1, cantidad=2)
+    carrito.agregar_producto(producto1, cantidad=2)
+    with pytest.raises(Exception):
+        carrito.agregar_producto(producto1, cantidad=3)
+    assert carrito.contar_items() <= stock1
