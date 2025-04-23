@@ -115,3 +115,11 @@ class Carrito:
             return self.aplicar_descuento(porcentaje)
         else:
             return self.calcular_total()
+
+    def obtener_items_ordenados(self, criterio: str) -> List[ItemCarrito]:
+        if "nombre" == criterio:
+            return sorted(self.items, key=lambda item: item.producto.nombre)
+        elif "precio" == criterio:
+            return sorted(self.items, key=lambda item: item.producto.precio)
+        else:
+            raise Exception

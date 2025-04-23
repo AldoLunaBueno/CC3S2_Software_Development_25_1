@@ -1,8 +1,10 @@
 # tests/test_carrito.py
 
 import pytest
-from src.carrito import Carrito
+from src.carrito import Carrito, ItemCarrito
 from src.factories import ProductoFactory
+from typing import List
+
 
 
 def test_agregar_producto_nuevo():
@@ -323,3 +325,74 @@ def test_agregar_producto_sobre_limite_stock():
     with pytest.raises(Exception):
         carrito.agregar_producto(producto1, cantidad=3)
     assert carrito.contar_items() <= stock1
+
+
+def test_obtener_items_ordenados_por_nombre():
+    """
+    AAA:
+    Arrange: Se crea un carrito y algunos productos para agregarlos al carrito.
+    Act: Se ordenan los items del carrito por precio y se obtiene esta lista.
+    Assert: Se verifica que estos items sigan el mismo orden
+        en el que se agregaron los productos.
+    """
+    # Arrange
+    carrito = Carrito()
+    p1 = ProductoFactory(nombre="Laptop", precio=4)
+    p2 = ProductoFactory(nombre="Smartphone", precio=2)
+    p3 = ProductoFactory(nombre="Mouse", precio=7)
+    p4 = ProductoFactory(nombre="Dishwasher", precio=9)
+    p5 = ProductoFactory(nombre="Monitor", precio=3)
+
+    carrito.agregar_producto(producto=p1, cantidad=1)
+    carrito.agregar_producto(producto=p2, cantidad=1)
+    carrito.agregar_producto(producto=p3, cantidad=1)
+    carrito.agregar_producto(producto=p4, cantidad=1)
+    carrito.agregar_producto(producto=p5, cantidad=1)
+
+    # Act
+    por_nombre: List[ItemCarrito] = carrito.obtener_items_ordenados(
+        criterio="nombre")
+
+    # Assert
+    # orden por nombre: Dishwasher, Laptop, Monitor, Mouse, Smartphone
+    # orden de productos: p4, p1, p5, p3, p2
+    assert por_nombre[0].producto == p4
+    assert por_nombre[1].producto == p1
+    assert por_nombre[2].producto == p5
+    assert por_nombre[3].producto == p3
+    assert por_nombre[4].producto == p2
+
+
+def test_obtener_items_ordenados_por_precio():
+    """
+    AAA:
+    Arrange: Se crea un carrito y algunos productos para agregarlos al carrito.
+    Act: Se ordenan los items del carrito por precio y se obtiene esta lista.
+    Assert: Se verifica que estos items sigan el mismo orden
+        en el que se agregaron los productos.
+    """
+    # Arrange
+    carrito = Carrito()
+    p1 = ProductoFactory(nombre="Laptop", precio=4)
+    p2 = ProductoFactory(nombre="Smartphone", precio=2)
+    p3 = ProductoFactory(nombre="Mouse", precio=7)
+    p4 = ProductoFactory(nombre="Dishwasher", precio=9)
+    p5 = ProductoFactory(nombre="Monitor", precio=3)
+
+    carrito.agregar_producto(producto=p1, cantidad=1)
+    carrito.agregar_producto(producto=p2, cantidad=1)
+    carrito.agregar_producto(producto=p3, cantidad=1)
+    carrito.agregar_producto(producto=p4, cantidad=1)
+    carrito.agregar_producto(producto=p5, cantidad=1)
+
+    # Act
+    por_precio: List[ItemCarrito] = carrito.obtener_items_ordenados(
+        criterio="precio")
+
+    # Assert
+    # orden por precio: p2 (2), p5 (3), p1 (4), p3 (7), p4 (9)
+    assert por_precio[0].producto == p2
+    assert por_precio[1].producto == p5
+    assert por_precio[2].producto == p1
+    assert por_precio[3].producto == p3
+    assert por_precio[4].producto == p4
