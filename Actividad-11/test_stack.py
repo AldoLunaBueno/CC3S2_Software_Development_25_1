@@ -24,7 +24,8 @@ class TestStack(TestCase):
         stack.push(2)
         self.assertEqual(
             stack.peek(), 2,
-            "Después de otro push, el valor superior debe ser el último agregado"
+            "Después de otro push, el valor superior \
+                debe ser el último agregado"
         )
 
     def test_pop(self) -> None:
