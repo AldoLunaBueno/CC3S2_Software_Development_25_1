@@ -14,7 +14,7 @@ class DataValidationError(Exception):
 
 class Account(db.Model):
     """Clase que representa una Cuenta"""
-    
+
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64))
     email = db.Column(db.String(64))
