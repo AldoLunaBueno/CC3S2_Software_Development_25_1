@@ -1,0 +1,62 @@
+import pytest 
+ 
+@pytest.fixture 
+def database(): 
+    return <alguna conexion a una base de datos> 
+ 
+def test_insert(database): 
+    database.insert(123) 
+
+---
+
+import pytest 
+ 
+@pytest.fixture 
+def database(): 
+    db = <alguna conexion a una base de datos> 
+    yield db 
+    db.close() 
+ 
+def test_insert(database): 
+    database.insert(123) 
+  
+---
+import pytest 
+ 
+@pytest.fixture(scope="module") 
+def database(): 
+    db = <alguna conexion a una base de datos> 
+    yield db 
+    db.close() 
+ 
+def test_insert(database): 
+    database.insert(123) 
+
+---
+import os 
+import pytest 
+ 
+@pytest.fixture(autouse=True) 
+def change_user_env(): 
+    curuser = os.environ.get("USER") 
+    os.environ["USER"] = "f2" 
+    yield 
+    os.environ["USER"] = curuser 
+ 
+def test_user(): 
+    assert os.getenv("USER") == "f2" 
+
+---
+import pytest 
+import miapp 
+ 
+@pytest.fixture(params=["mysql", "postgresql"]) 
+def database(request): 
+    d = miapp.driver(request.param) 
+    d.start() 
+    yield d 
+    d.stop() 
+ 
+def test_insert(database): 
+    database.insert("data") 
+  
