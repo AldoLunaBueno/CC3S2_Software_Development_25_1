@@ -1,0 +1,3 @@
+[submodule "libs/submodulo"]
+	path = libs/submodulo
+	url = https://github.com/AldoLunaBueno/ej_usermanager.git
