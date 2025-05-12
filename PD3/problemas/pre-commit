@@ -1,0 +1,118 @@
+#!/usr/bin/env bash
+
+# Hook pre-commit que realiza comprobaciones en archivos staged (.sh, .py, .js)
+# Revisa comentarios TODO/FIXME, ejecuta linters (shellcheck, pyflakes)
+# y genera un reporte si no se pasa la opción --skip-report.
+
+set -euo pipefail
+
+trap 'echo "Error en hook pre-commit en la línea $LINENO"; exit 1' ERR
+
+# Variables globales
+has_errors=false
+declare -a errors
+skip_report=false
+
+# Recolectar si se pasa --skip-report como parámetro
+for arg in "$@"; do
+  if [[ "$arg" == "--skip-report" ]]; then
+    skip_report=true
+  fi
+done
+
+# Función: Obtiene archivos staged que terminen en .sh, .py o .js
+get_staged_files() {
+  git diff --cached --name-only --diff-filter=ACM | grep -E '\.(sh|py|js)$' || true
+}
+
+# Función: Busca TODO o FIXME en archivos staged
+check_todo_comments() {
+  # Comentario: Revisa comentarios TODO/FIXME en los archivos staged.
+  local files
+  mapfile -t files < <(get_staged_files)
+
+  for file in "${files[@]}"; do
+    if grep -En '(TODO|FIXME)' "$file" > /dev/null; then
+      local matches
+      matches=$(grep -En '(TODO|FIXME)' "$file")
+      errors+=("[$file] Comentarios TODO/FIXME encontrados:\n$matches")
+      has_errors=true
+    fi
+  done
+}
+
+# Función: Corre shellcheck sobre scripts .sh
+run_shellcheck() {
+  # Comentario: Linter shellcheck para scripts Bash.
+  local files
+  mapfile -t files < <(get_staged_files)
+
+  for file in "${files[@]}"; do
+    if [[ "$file" == *.sh ]]; then
+      if ! output=$(shellcheck "$file" 2>&1); then
+        errors+=("[$file] shellcheck:\n$output")
+        has_errors=true
+      fi
+    fi
+  done
+}
+
+# Función: Corre pyflakes sobre scripts Python
+run_pyflakes() {
+  # Comentario: Linter pyflakes para scripts Python.
+  local files
+  mapfile -t files < <(get_staged_files)
+
+  for file in "${files[@]}"; do
+    if [[ "$file" == *.py ]]; then
+      if ! output=$(pyflakes "$file" 2>&1); then
+        errors+=("[$file] pyflakes:\n$output")
+        has_errors=true
+      fi
+    fi
+  done
+}
+
+# Función: Genera reporte con el estado del repositorio
+generate_report() {
+  # Comentario: Genera un reporte de pre-commit con errores y estado.
+  local filename="precommit_report_$(date +%Y%m%d_%H%M%S).txt"
+  local staged
+  staged=$(get_staged_files | xargs)
+
+  {
+    echo "Branch actual: $(git rev-parse --abbrev-ref HEAD)"
+    echo "Archivos staged: $staged"
+    echo "Estado corto del repositorio:"
+    git status --short
+    echo ""
+    echo "Errores detectados:"
+    for err in "${errors[@]}"; do
+      echo -e "$err"
+      echo "---"
+    done
+  } > "$filename"
+
+  echo "Reporte generado en $filename"
+}
+
+# === Lógica principal del hook ===
+check_todo_comments
+run_shellcheck
+run_pyflakes
+
+if $has_errors; then
+  echo "Commit abortado por errores:"
+  for err in "${errors[@]}"; do
+    echo -e "$err"
+    echo "---"
+  done
+  exit 1
+fi
+
+if ! $skip_report; then
+  generate_report
+fi
+
+# Permite el commit si no hay errores
+exit 0
