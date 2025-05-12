@@ -1,0 +1,41 @@
+name: CI/CD Pipeline for pytest and behave tests
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Display Python version
+        run: python -c "import sys; print(sys.version)"
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Check code quality with flake8
+        run: flake8 src tests --max-line-length=80
+      - name: Test with pytest
+        run: pytest
+      - name: Test with behave in spanish
+        run: behave -t spanish -skip --no-capture
+      - name: Test with behave in english
+        run: behave -t english -skip --no-capture
+      - name: Test "criterio_nuevo" scenarios
+        run: behave -t criterio_nuevo -skip --no-capture
+      - name: Stress test with behave 
+        run: behave -t stress -skip --no-capture
+      - name: Notify to Slack if fails through a webhook
+        if: failure()
+        run: |
+          curl -X POST -H 'Content-type: application/json' --data '{"text": "El pipeline falló en el repo ${{ github.repository }}.\nCommit: ${{ github.sha }}\nAutor: ${{ github.actor }}"}' \
+          "${{ secrets.SLACK_WEBHOOK_URL }}"
+      - name: Get coverage
+        run: pytest --cov=src --cov-branch --cov-report=html
+      - name: Upload HTML coverage report as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: htmlcov
