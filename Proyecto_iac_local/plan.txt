@@ -1,0 +1,604 @@
+module.simulated_apps["app1"].data.external.app_metadata_py: Reading...
+module.simulated_apps["app1"].data.external.app_metadata_py: Read complete after 0s [id=-]
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  + create
+ <= read (data resources)
+
+Terraform will perform the following actions:
+
+  # local_file.bienvenida will be created
+  + resource "local_file" "bienvenida" {
+      + content              = (known after apply)
+      + content_base64sha256 = (known after apply)
+      + content_base64sha512 = (known after apply)
+      + content_md5          = (known after apply)
+      + content_sha1         = (known after apply)
+      + content_sha256       = (known after apply)
+      + content_sha512       = (known after apply)
+      + directory_permission = "0777"
+      + file_permission      = "0777"
+      + filename             = "/mnt/d/Repos/CC3S2_Software_Development_25_1/Proyecto_iac_local/generated_environment/bienvenida.txt"
+      + id                   = (known after apply)
+    }
+
+  # null_resource.check_all_healths will be created
+  + resource "null_resource" "check_all_healths" {
+      + id       = (known after apply)
+      + triggers = {
+          + "app_outputs_json" = jsonencode(
+                {
+                  + app1 = {
+                      + service_config_path      = "/mnt/d/Repos/CC3S2_Software_Development_25_1/Proyecto_iac_local/generated_environment/services/app1_v1.0.2/config.json"
+                      + service_install_path     = "/mnt/d/Repos/CC3S2_Software_Development_25_1/Proyecto_iac_local/generated_environment/services/app1_v1.0.2"
+                      + service_metadata_content = {
+                          + additional_info     = [
+                              + "Linea info 0",
+                              + "Linea info 1",
+                              + "Linea info 2",
+                              + "Linea info 3",
+                              + "Linea info 4",
+                              + "Linea info 5",
+                              + "Linea info 6",
+                              + "Linea info 7",
+                              + "Linea info 8",
+                              + "Linea info 9",
+                            ]
+                          + appName             = "app1"
+                          + appVersion          = "1.0.2"
+                          + generationTimestamp = "2025-05-27T16:44:12.038635"
+                          + generator           = "Python IaC Script"
+                          + parametersReceived  = {
+                              + app_name   = "app1"
+                              + input_data = "datos_adicionales_para_python"
+                              + q1         = "v1"
+                              + q10        = "v10"
+                              + q11        = "v11"
+                              + q12        = "v12"
+                              + q13        = "v13"
+                              + q14        = "v14"
+                              + q15        = "v15"
+                              + q16        = "v16"
+                              + q17        = "v17"
+                              + q18        = "v18"
+                              + q19        = "v19"
+                              + q2         = "v2"
+                              + q20        = "v20"
+                              + q3         = "v3"
+                              + q4         = "v4"
+                              + q5         = "v5"
+                              + q6         = "v6"
+                              + q7         = "v7"
+                              + q8         = "v8"
+                              + q9         = "v9"
+                              + version    = "1.0.2"
+                            }
+                          + processing_log      = [
+                              + "Entrada log  0: Item procesado 37852e27-8376-46f9-aba2-9d4706e32c9b",
+                              + "Entrada log  1: Item procesado a1da6097-3c08-4cd4-8cd1-a180e2f86d84",
+                              + "Entrada log  2: Item procesado a1471bd6-cd1b-4c4a-b042-a2fe0370442c",
+                              + "Entrada log  3: Item procesado 5ea0fba7-1ca7-446b-87da-53ab5f8d1d0f",
+                              + "Entrada log  4: Item procesado 654c9e74-4a08-4a2d-aa15-9fd32bed9065",
+                              + "Entrada log  5: Item procesado 09377649-c288-4767-915c-ee38f02329fa",
+                              + "Entrada log  6: Item procesado b9885fe5-9828-4077-b98d-a98effd92a5c",
+                              + "Entrada log  7: Item procesado d24f6924-e7c0-4264-a869-830a9fe779bb",
+                              + "Entrada log  8: Item procesado 9de28c8f-cac8-4fc8-9db9-518315976717",
+                              + "Entrada log  9: Item procesado 12b9eb8d-9993-4316-97db-686ef668d0c7",
+                              + "Entrada log  10: Item procesado 47ee95ba-2b5c-4885-97dc-1cf5c24ffc75",
+                              + "Entrada log  11: Item procesado 76c1e4d0-e269-4f11-9035-b8e9eea43eb2",
+                              + "Entrada log  12: Item procesado d40e2099-e3a7-41a0-862a-26c9b6c40211",
+                              + "Entrada log  13: Item procesado b584e623-8e1c-4eb8-bba5-5993fec15d99",
+                              + "Entrada log  14: Item procesado fd8f9996-a415-45e2-9d12-47a9b4eb632b",
+                              + "Entrada log  15: Item procesado 35997d3b-cfdb-49eb-93de-dcebda2ab1e9",
+                              + "Entrada log  16: Item procesado 4f49f17f-7b75-46d1-806f-266bafc87e11",
+                              + "Entrada log  17: Item procesado 43097054-545a-46fe-94e3-b9f8cac84b23",
+                              + "Entrada log  18: Item procesado 8b3aa53d-e63b-4588-94f0-d6e01c2f2c0a",
+                              + "Entrada log  19: Item procesado 08485a3c-9570-4da8-b3a3-75fdac1b47ce",
+                              + "Entrada log  20: Item procesado e5238000-e4ec-49f6-8aab-3171488f6a80",
+                              + "Entrada log  21: Item procesado 71fa3855-b528-437a-9276-ea505ef690ff",
+                              + "Entrada log  22: Item procesado 86a2361e-e28a-43a0-91dd-aff3b3a48225",
+                              + "Entrada log  23: Item procesado a457bcbf-db45-4625-85f6-be699409ece0",
+                              + "Entrada log  24: Item procesado 93649b93-0917-4a44-a41e-26b15fe72c47",
+                              + "Entrada log  25: Item procesado 900afdbd-14a9-438c-b727-4753157a232d",
+                              + "Entrada log  26: Item procesado 995130d8-4680-4aa9-9bef-95f02fb86e0a",
+                              + "Entrada log  27: Item procesado 486bff70-52bf-49e0-8b79-59085f874732",
+                              + "Entrada log  28: Item procesado 0c16eadb-4442-4cf0-ac53-14f8841bd9b7",
+                              + "Entrada log  29: Item procesado efc43b4d-a304-4e4b-8ee7-dcccd545076a",
+                            ]
+                          + simulatedComplexity = {
+                              + calculated_metrics     = {
+                                  + val_0 = 0
+                                  + val_1 = 66.66666666666667
+                                  + val_2 = 80
+                                  + val_3 = 85.71428571428571
+                                  + val_4 = 88.88888888888889
+                                  + val_5 = 90.9090909090909
+                                  + val_6 = 92.3076923076923
+                                  + val_7 = 93.33333333333333
+                                  + val_8 = 94.11764705882354
+                                  + val_9 = 94.73684210526316
+                                }
+                              + generated_data_points  = [
+                                  + "Simulated data point 0 for app1 v1.0.2 - 188b11b0-e152-41ea-bcfb-99063ffa7df3",
+                                  + "Simulated data point 1 for app1 v1.0.2 - 6a676d88-ef35-4106-b9f7-909964116d3e",
+                                  + "Simulated data point 2 for app1 v1.0.2 - c554d529-3016-4741-83f1-747e5d51eb33",
+                                  + "Simulated data point 3 for app1 v1.0.2 - 95bb8b3e-8cc0-4704-80d4-1d2cf0bffdf0",
+                                  + "Simulated data point 4 for app1 v1.0.2 - db2bed1c-aa54-4833-a8df-0b475b58db6d",
+                                  + "Simulated data point 5 for app1 v1.0.2 - 66c7240a-9f21-4015-81b0-c4d920d38c41",
+                                  + "Simulated data point 6 for app1 v1.0.2 - 62b71e35-68df-4c1a-ab25-00a56b30ff2d",
+                                  + "Simulated data point 7 for app1 v1.0.2 - 00fdd1bf-38c8-48ba-83c6-923453360d35",
+                                  + "Simulated data point 8 for app1 v1.0.2 - 5ba9d7d7-73a7-412f-ae7f-5239bd3f19b7",
+                                  + "Simulated data point 9 for app1 v1.0.2 - b70d96f4-bbaf-48c0-a800-f2f05dd8537a",
+                                  + "Simulated data point 10 for app1 v1.0.2 - e4353aef-0b59-40a1-85f4-c4c25ca24a24",
+                                  + "Simulated data point 11 for app1 v1.0.2 - 2253d764-ff40-4843-aaad-2ede9ea2b0ec",
+                                  + "Simulated data point 12 for app1 v1.0.2 - 9d8f96bc-f497-424a-bca2-299b5673c2af",
+                                  + "Simulated data point 13 for app1 v1.0.2 - 355d3ccd-b9f2-404f-ac01-3e7b4e799578",
+                                  + "Simulated data point 14 for app1 v1.0.2 - ed56c5c3-7397-4cee-8711-22f113d09d59",
+                                ]
+                              + generation_details     = [
+                                  + "Detail line 0",
+                                  + "Detail line 1",
+                                  + "Detail line 2",
+                                  + "Detail line 3",
+                                  + "Detail line 4",
+                                  + "Detail line 5",
+                                  + "Detail line 6",
+                                  + "Detail line 7",
+                                  + "Detail line 8",
+                                  + "Detail line 9",
+                                  + "Detail line 10",
+                                  + "Detail line 11",
+                                  + "Detail line 12",
+                                  + "Detail line 13",
+                                  + "Detail line 14",
+                                ]
+                              + simulated_dependencies = {
+                                  + dep_0 = "version_0.1"
+                                  + dep_1 = "version_1.2"
+                                  + dep_2 = "version_2.3"
+                                  + dep_3 = "version_3.4"
+                                  + dep_4 = "version_4.5"
+                                  + dep_5 = "version_5.6"
+                                  + dep_6 = "version_6.7"
+                                  + dep_7 = "version_7.8"
+                                  + dep_8 = "version_8.9"
+                                  + dep_9 = "version_9.10"
+                                }
+                            }
+                          + status_flags        = {
+                              + flag_0 = true
+                              + flag_1 = false
+                              + flag_2 = true
+                              + flag_3 = false
+                              + flag_4 = true
+                              + flag_5 = false
+                              + flag_6 = true
+                              + flag_7 = false
+                              + flag_8 = true
+                              + flag_9 = false
+                            }
+                          + uniqueId            = "59d948d9-be30-4962-9b7b-cadc72e81d75"
+                        }
+                    }
+                }
+            )
+        }
+    }
+
+  # null_resource.validate_all_configs will be created
+  + resource "null_resource" "validate_all_configs" {
+      + id       = (known after apply)
+      + triggers = {
+          + "app_outputs_json" = jsonencode(
+                {
+                  + app1 = {
+                      + service_config_path      = "/mnt/d/Repos/CC3S2_Software_Development_25_1/Proyecto_iac_local/generated_environment/services/app1_v1.0.2/config.json"
+                      + service_install_path     = "/mnt/d/Repos/CC3S2_Software_Development_25_1/Proyecto_iac_local/generated_environment/services/app1_v1.0.2"
+                      + service_metadata_content = {
+                          + additional_info     = [
+                              + "Linea info 0",
+                              + "Linea info 1",
+                              + "Linea info 2",
+                              + "Linea info 3",
+                              + "Linea info 4",
+                              + "Linea info 5",
+                              + "Linea info 6",
+                              + "Linea info 7",
+                              + "Linea info 8",
+                              + "Linea info 9",
+                            ]
+                          + appName             = "app1"
+                          + appVersion          = "1.0.2"
+                          + generationTimestamp = "2025-05-27T16:44:12.038635"
+                          + generator           = "Python IaC Script"
+                          + parametersReceived  = {
+                              + app_name   = "app1"
+                              + input_data = "datos_adicionales_para_python"
+                              + q1         = "v1"
+                              + q10        = "v10"
+                              + q11        = "v11"
+                              + q12        = "v12"
+                              + q13        = "v13"
+                              + q14        = "v14"
+                              + q15        = "v15"
+                              + q16        = "v16"
+                              + q17        = "v17"
+                              + q18        = "v18"
+                              + q19        = "v19"
+                              + q2         = "v2"
+                              + q20        = "v20"
+                              + q3         = "v3"
+                              + q4         = "v4"
+                              + q5         = "v5"
+                              + q6         = "v6"
+                              + q7         = "v7"
+                              + q8         = "v8"
+                              + q9         = "v9"
+                              + version    = "1.0.2"
+                            }
+                          + processing_log      = [
+                              + "Entrada log  0: Item procesado 37852e27-8376-46f9-aba2-9d4706e32c9b",
+                              + "Entrada log  1: Item procesado a1da6097-3c08-4cd4-8cd1-a180e2f86d84",
+                              + "Entrada log  2: Item procesado a1471bd6-cd1b-4c4a-b042-a2fe0370442c",
+                              + "Entrada log  3: Item procesado 5ea0fba7-1ca7-446b-87da-53ab5f8d1d0f",
+                              + "Entrada log  4: Item procesado 654c9e74-4a08-4a2d-aa15-9fd32bed9065",
+                              + "Entrada log  5: Item procesado 09377649-c288-4767-915c-ee38f02329fa",
+                              + "Entrada log  6: Item procesado b9885fe5-9828-4077-b98d-a98effd92a5c",
+                              + "Entrada log  7: Item procesado d24f6924-e7c0-4264-a869-830a9fe779bb",
+                              + "Entrada log  8: Item procesado 9de28c8f-cac8-4fc8-9db9-518315976717",
+                              + "Entrada log  9: Item procesado 12b9eb8d-9993-4316-97db-686ef668d0c7",
+                              + "Entrada log  10: Item procesado 47ee95ba-2b5c-4885-97dc-1cf5c24ffc75",
+                              + "Entrada log  11: Item procesado 76c1e4d0-e269-4f11-9035-b8e9eea43eb2",
+                              + "Entrada log  12: Item procesado d40e2099-e3a7-41a0-862a-26c9b6c40211",
+                              + "Entrada log  13: Item procesado b584e623-8e1c-4eb8-bba5-5993fec15d99",
+                              + "Entrada log  14: Item procesado fd8f9996-a415-45e2-9d12-47a9b4eb632b",
+                              + "Entrada log  15: Item procesado 35997d3b-cfdb-49eb-93de-dcebda2ab1e9",
+                              + "Entrada log  16: Item procesado 4f49f17f-7b75-46d1-806f-266bafc87e11",
+                              + "Entrada log  17: Item procesado 43097054-545a-46fe-94e3-b9f8cac84b23",
+                              + "Entrada log  18: Item procesado 8b3aa53d-e63b-4588-94f0-d6e01c2f2c0a",
+                              + "Entrada log  19: Item procesado 08485a3c-9570-4da8-b3a3-75fdac1b47ce",
+                              + "Entrada log  20: Item procesado e5238000-e4ec-49f6-8aab-3171488f6a80",
+                              + "Entrada log  21: Item procesado 71fa3855-b528-437a-9276-ea505ef690ff",
+                              + "Entrada log  22: Item procesado 86a2361e-e28a-43a0-91dd-aff3b3a48225",
+                              + "Entrada log  23: Item procesado a457bcbf-db45-4625-85f6-be699409ece0",
+                              + "Entrada log  24: Item procesado 93649b93-0917-4a44-a41e-26b15fe72c47",
+                              + "Entrada log  25: Item procesado 900afdbd-14a9-438c-b727-4753157a232d",
+                              + "Entrada log  26: Item procesado 995130d8-4680-4aa9-9bef-95f02fb86e0a",
+                              + "Entrada log  27: Item procesado 486bff70-52bf-49e0-8b79-59085f874732",
+                              + "Entrada log  28: Item procesado 0c16eadb-4442-4cf0-ac53-14f8841bd9b7",
+                              + "Entrada log  29: Item procesado efc43b4d-a304-4e4b-8ee7-dcccd545076a",
+                            ]
+                          + simulatedComplexity = {
+                              + calculated_metrics     = {
+                                  + val_0 = 0
+                                  + val_1 = 66.66666666666667
+                                  + val_2 = 80
+                                  + val_3 = 85.71428571428571
+                                  + val_4 = 88.88888888888889
+                                  + val_5 = 90.9090909090909
+                                  + val_6 = 92.3076923076923
+                                  + val_7 = 93.33333333333333
+                                  + val_8 = 94.11764705882354
+                                  + val_9 = 94.73684210526316
+                                }
+                              + generated_data_points  = [
+                                  + "Simulated data point 0 for app1 v1.0.2 - 188b11b0-e152-41ea-bcfb-99063ffa7df3",
+                                  + "Simulated data point 1 for app1 v1.0.2 - 6a676d88-ef35-4106-b9f7-909964116d3e",
+                                  + "Simulated data point 2 for app1 v1.0.2 - c554d529-3016-4741-83f1-747e5d51eb33",
+                                  + "Simulated data point 3 for app1 v1.0.2 - 95bb8b3e-8cc0-4704-80d4-1d2cf0bffdf0",
+                                  + "Simulated data point 4 for app1 v1.0.2 - db2bed1c-aa54-4833-a8df-0b475b58db6d",
+                                  + "Simulated data point 5 for app1 v1.0.2 - 66c7240a-9f21-4015-81b0-c4d920d38c41",
+                                  + "Simulated data point 6 for app1 v1.0.2 - 62b71e35-68df-4c1a-ab25-00a56b30ff2d",
+                                  + "Simulated data point 7 for app1 v1.0.2 - 00fdd1bf-38c8-48ba-83c6-923453360d35",
+                                  + "Simulated data point 8 for app1 v1.0.2 - 5ba9d7d7-73a7-412f-ae7f-5239bd3f19b7",
+                                  + "Simulated data point 9 for app1 v1.0.2 - b70d96f4-bbaf-48c0-a800-f2f05dd8537a",
+                                  + "Simulated data point 10 for app1 v1.0.2 - e4353aef-0b59-40a1-85f4-c4c25ca24a24",
+                                  + "Simulated data point 11 for app1 v1.0.2 - 2253d764-ff40-4843-aaad-2ede9ea2b0ec",
+                                  + "Simulated data point 12 for app1 v1.0.2 - 9d8f96bc-f497-424a-bca2-299b5673c2af",
+                                  + "Simulated data point 13 for app1 v1.0.2 - 355d3ccd-b9f2-404f-ac01-3e7b4e799578",
+                                  + "Simulated data point 14 for app1 v1.0.2 - ed56c5c3-7397-4cee-8711-22f113d09d59",
+                                ]
+                              + generation_details     = [
+                                  + "Detail line 0",
+                                  + "Detail line 1",
+                                  + "Detail line 2",
+                                  + "Detail line 3",
+                                  + "Detail line 4",
+                                  + "Detail line 5",
+                                  + "Detail line 6",
+                                  + "Detail line 7",
+                                  + "Detail line 8",
+                                  + "Detail line 9",
+                                  + "Detail line 10",
+                                  + "Detail line 11",
+                                  + "Detail line 12",
+                                  + "Detail line 13",
+                                  + "Detail line 14",
+                                ]
+                              + simulated_dependencies = {
+                                  + dep_0 = "version_0.1"
+                                  + dep_1 = "version_1.2"
+                                  + dep_2 = "version_2.3"
+                                  + dep_3 = "version_3.4"
+                                  + dep_4 = "version_4.5"
+                                  + dep_5 = "version_5.6"
+                                  + dep_6 = "version_6.7"
+                                  + dep_7 = "version_7.8"
+                                  + dep_8 = "version_8.9"
+                                  + dep_9 = "version_9.10"
+                                }
+                            }
+                          + status_flags        = {
+                              + flag_0 = true
+                              + flag_1 = false
+                              + flag_2 = true
+                              + flag_3 = false
+                              + flag_4 = true
+                              + flag_5 = false
+                              + flag_6 = true
+                              + flag_7 = false
+                              + flag_8 = true
+                              + flag_9 = false
+                            }
+                          + uniqueId            = "59d948d9-be30-4962-9b7b-cadc72e81d75"
+                        }
+                    }
+                }
+            )
+        }
+    }
+
+  # random_id.entorno_id will be created
+  + resource "random_id" "entorno_id" {
+      + b64_std     = (known after apply)
+      + b64_url     = (known after apply)
+      + byte_length = 8
+      + dec         = (known after apply)
+      + hex         = (known after apply)
+      + id          = (known after apply)
+    }
+
+  # module.simulated_apps["app1"].data.template_file.app_config will be read during apply
+  # (config refers to values not yet known)
+ <= data "template_file" "app_config" {
+      + id       = (known after apply)
+      + rendered = (known after apply)
+      + template = <<-EOT
+            {
+                "applicationName": "${app_name_tpl}",
+                "version": "${app_version_tpl}",
+                "listenPort": ${port_tpl},
+                "deploymentTime": "${deployed_at_tpl}",
+                "notes": "Este es un archivo de configuración autogenerado. ${message_tpl}",
+                "settings": {
+                    "featureA": true,
+                    "featureB": false,
+                    "maxConnections": 100,
+                    "logLevel": "INFO"
+                    // Líneas de settings simulados
+                    ,"s1": "val1", "s2": "val2", "s3": "val3", "s4": "val4", "s5": "val5"
+                    ,"s6": "val6", "s7": "val7", "s8": "val8", "s9": "val9", "s10": "val10"
+                    ,"s11": "val11", "s12": "val12", "s13": "val13", "s14": "val14", "s15": "val15"
+                    ,"s16": "val16", "s17": "val17", "s18": "val18", "s19": "val19", "s20": "val20"
+                    ,"s21": "val21", "s22": "val22", "s23": "val23", "s24": "val24", "s25": "val25"
+                    ,"s26": "val26", "s27": "val27", "s28": "val28", "s29": "val29", "s30": "val30"
+                }
+            }
+        EOT
+      + vars     = {
+          + "app_name_tpl"    = "app1"
+          + "app_version_tpl" = "1.0.2"
+          + "deployed_at_tpl" = (known after apply)
+          + "message_tpl"     = (sensitive value)
+          + "port_tpl"        = "8081"
+        }
+    }
+
+  # module.simulated_apps["app1"].local_file.config_json will be created
+  + resource "local_file" "config_json" {
+      + content              = (known after apply)
+      + content_base64sha256 = (known after apply)
+      + content_base64sha512 = (known after apply)
+      + content_md5          = (known after apply)
+      + content_sha1         = (known after apply)
+      + content_sha256       = (known after apply)
+      + content_sha512       = (known after apply)
+      + directory_permission = "0777"
+      + file_permission      = "0777"
+      + filename             = "/mnt/d/Repos/CC3S2_Software_Development_25_1/Proyecto_iac_local/generated_environment/services/app1_v1.0.2/config.json"
+      + id                   = (known after apply)
+    }
+
+  # module.simulated_apps["app1"].local_file.metadata_json will be created
+  + resource "local_file" "metadata_json" {
+      + content              = jsonencode(
+            {
+              + additional_info     = [
+                  + "Linea info 0",
+                  + "Linea info 1",
+                  + "Linea info 2",
+                  + "Linea info 3",
+                  + "Linea info 4",
+                  + "Linea info 5",
+                  + "Linea info 6",
+                  + "Linea info 7",
+                  + "Linea info 8",
+                  + "Linea info 9",
+                ]
+              + appName             = "app1"
+              + appVersion          = "1.0.2"
+              + generationTimestamp = "2025-05-27T16:44:12.038635"
+              + generator           = "Python IaC Script"
+              + parametersReceived  = {
+                  + app_name   = "app1"
+                  + input_data = "datos_adicionales_para_python"
+                  + q1         = "v1"
+                  + q10        = "v10"
+                  + q11        = "v11"
+                  + q12        = "v12"
+                  + q13        = "v13"
+                  + q14        = "v14"
+                  + q15        = "v15"
+                  + q16        = "v16"
+                  + q17        = "v17"
+                  + q18        = "v18"
+                  + q19        = "v19"
+                  + q2         = "v2"
+                  + q20        = "v20"
+                  + q3         = "v3"
+                  + q4         = "v4"
+                  + q5         = "v5"
+                  + q6         = "v6"
+                  + q7         = "v7"
+                  + q8         = "v8"
+                  + q9         = "v9"
+                  + version    = "1.0.2"
+                }
+              + processing_log      = [
+                  + "Entrada log  0: Item procesado 37852e27-8376-46f9-aba2-9d4706e32c9b",
+                  + "Entrada log  1: Item procesado a1da6097-3c08-4cd4-8cd1-a180e2f86d84",
+                  + "Entrada log  2: Item procesado a1471bd6-cd1b-4c4a-b042-a2fe0370442c",
+                  + "Entrada log  3: Item procesado 5ea0fba7-1ca7-446b-87da-53ab5f8d1d0f",
+                  + "Entrada log  4: Item procesado 654c9e74-4a08-4a2d-aa15-9fd32bed9065",
+                  + "Entrada log  5: Item procesado 09377649-c288-4767-915c-ee38f02329fa",
+                  + "Entrada log  6: Item procesado b9885fe5-9828-4077-b98d-a98effd92a5c",
+                  + "Entrada log  7: Item procesado d24f6924-e7c0-4264-a869-830a9fe779bb",
+                  + "Entrada log  8: Item procesado 9de28c8f-cac8-4fc8-9db9-518315976717",
+                  + "Entrada log  9: Item procesado 12b9eb8d-9993-4316-97db-686ef668d0c7",
+                  + "Entrada log  10: Item procesado 47ee95ba-2b5c-4885-97dc-1cf5c24ffc75",
+                  + "Entrada log  11: Item procesado 76c1e4d0-e269-4f11-9035-b8e9eea43eb2",
+                  + "Entrada log  12: Item procesado d40e2099-e3a7-41a0-862a-26c9b6c40211",
+                  + "Entrada log  13: Item procesado b584e623-8e1c-4eb8-bba5-5993fec15d99",
+                  + "Entrada log  14: Item procesado fd8f9996-a415-45e2-9d12-47a9b4eb632b",
+                  + "Entrada log  15: Item procesado 35997d3b-cfdb-49eb-93de-dcebda2ab1e9",
+                  + "Entrada log  16: Item procesado 4f49f17f-7b75-46d1-806f-266bafc87e11",
+                  + "Entrada log  17: Item procesado 43097054-545a-46fe-94e3-b9f8cac84b23",
+                  + "Entrada log  18: Item procesado 8b3aa53d-e63b-4588-94f0-d6e01c2f2c0a",
+                  + "Entrada log  19: Item procesado 08485a3c-9570-4da8-b3a3-75fdac1b47ce",
+                  + "Entrada log  20: Item procesado e5238000-e4ec-49f6-8aab-3171488f6a80",
+                  + "Entrada log  21: Item procesado 71fa3855-b528-437a-9276-ea505ef690ff",
+                  + "Entrada log  22: Item procesado 86a2361e-e28a-43a0-91dd-aff3b3a48225",
+                  + "Entrada log  23: Item procesado a457bcbf-db45-4625-85f6-be699409ece0",
+                  + "Entrada log  24: Item procesado 93649b93-0917-4a44-a41e-26b15fe72c47",
+                  + "Entrada log  25: Item procesado 900afdbd-14a9-438c-b727-4753157a232d",
+                  + "Entrada log  26: Item procesado 995130d8-4680-4aa9-9bef-95f02fb86e0a",
+                  + "Entrada log  27: Item procesado 486bff70-52bf-49e0-8b79-59085f874732",
+                  + "Entrada log  28: Item procesado 0c16eadb-4442-4cf0-ac53-14f8841bd9b7",
+                  + "Entrada log  29: Item procesado efc43b4d-a304-4e4b-8ee7-dcccd545076a",
+                ]
+              + simulatedComplexity = {
+                  + calculated_metrics     = {
+                      + val_0 = 0.0
+                      + val_1 = 66.66666666666667
+                      + val_2 = 80.0
+                      + val_3 = 85.71428571428571
+                      + val_4 = 88.88888888888889
+                      + val_5 = 90.9090909090909
+                      + val_6 = 92.3076923076923
+                      + val_7 = 93.33333333333333
+                      + val_8 = 94.11764705882354
+                      + val_9 = 94.73684210526316
+                    }
+                  + generated_data_points  = [
+                      + "Simulated data point 0 for app1 v1.0.2 - 188b11b0-e152-41ea-bcfb-99063ffa7df3",
+                      + "Simulated data point 1 for app1 v1.0.2 - 6a676d88-ef35-4106-b9f7-909964116d3e",
+                      + "Simulated data point 2 for app1 v1.0.2 - c554d529-3016-4741-83f1-747e5d51eb33",
+                      + "Simulated data point 3 for app1 v1.0.2 - 95bb8b3e-8cc0-4704-80d4-1d2cf0bffdf0",
+                      + "Simulated data point 4 for app1 v1.0.2 - db2bed1c-aa54-4833-a8df-0b475b58db6d",
+                      + "Simulated data point 5 for app1 v1.0.2 - 66c7240a-9f21-4015-81b0-c4d920d38c41",
+                      + "Simulated data point 6 for app1 v1.0.2 - 62b71e35-68df-4c1a-ab25-00a56b30ff2d",
+                      + "Simulated data point 7 for app1 v1.0.2 - 00fdd1bf-38c8-48ba-83c6-923453360d35",
+                      + "Simulated data point 8 for app1 v1.0.2 - 5ba9d7d7-73a7-412f-ae7f-5239bd3f19b7",
+                      + "Simulated data point 9 for app1 v1.0.2 - b70d96f4-bbaf-48c0-a800-f2f05dd8537a",
+                      + "Simulated data point 10 for app1 v1.0.2 - e4353aef-0b59-40a1-85f4-c4c25ca24a24",
+                      + "Simulated data point 11 for app1 v1.0.2 - 2253d764-ff40-4843-aaad-2ede9ea2b0ec",
+                      + "Simulated data point 12 for app1 v1.0.2 - 9d8f96bc-f497-424a-bca2-299b5673c2af",
+                      + "Simulated data point 13 for app1 v1.0.2 - 355d3ccd-b9f2-404f-ac01-3e7b4e799578",
+                      + "Simulated data point 14 for app1 v1.0.2 - ed56c5c3-7397-4cee-8711-22f113d09d59",
+                    ]
+                  + generation_details     = [
+                      + "Detail line 0",
+                      + "Detail line 1",
+                      + "Detail line 2",
+                      + "Detail line 3",
+                      + "Detail line 4",
+                      + "Detail line 5",
+                      + "Detail line 6",
+                      + "Detail line 7",
+                      + "Detail line 8",
+                      + "Detail line 9",
+                      + "Detail line 10",
+                      + "Detail line 11",
+                      + "Detail line 12",
+                      + "Detail line 13",
+                      + "Detail line 14",
+                    ]
+                  + simulated_dependencies = {
+                      + dep_0 = "version_0.1"
+                      + dep_1 = "version_1.2"
+                      + dep_2 = "version_2.3"
+                      + dep_3 = "version_3.4"
+                      + dep_4 = "version_4.5"
+                      + dep_5 = "version_5.6"
+                      + dep_6 = "version_6.7"
+                      + dep_7 = "version_7.8"
+                      + dep_8 = "version_8.9"
+                      + dep_9 = "version_9.10"
+                    }
+                }
+              + status_flags        = {
+                  + flag_0 = true
+                  + flag_1 = false
+                  + flag_2 = true
+                  + flag_3 = false
+                  + flag_4 = true
+                  + flag_5 = false
+                  + flag_6 = true
+                  + flag_7 = false
+                  + flag_8 = true
+                  + flag_9 = false
+                }
+              + uniqueId            = "59d948d9-be30-4962-9b7b-cadc72e81d75"
+            }
+        )
+      + content_base64sha256 = (known after apply)
+      + content_base64sha512 = (known after apply)
+      + content_md5          = (known after apply)
+      + content_sha1         = (known after apply)
+      + content_sha256       = (known after apply)
+      + content_sha512       = (known after apply)
+      + directory_permission = "0777"
+      + file_permission      = "0777"
+      + filename             = "/mnt/d/Repos/CC3S2_Software_Development_25_1/Proyecto_iac_local/generated_environment/services/app1_v1.0.2/metadata_generated.json"
+      + id                   = (known after apply)
+    }
+
+  # module.simulated_apps["app1"].null_resource.crear_directorio_app will be created
+  + resource "null_resource" "crear_directorio_app" {
+      + id       = (known after apply)
+      + triggers = {
+          + "dir_path" = "/mnt/d/Repos/CC3S2_Software_Development_25_1/Proyecto_iac_local/generated_environment/services/app1_v1.0.2"
+        }
+    }
+
+  # module.simulated_apps["app1"].null_resource.start_service_sh will be created
+  + resource "null_resource" "start_service_sh" {
+      + id       = (known after apply)
+      + triggers = {
+          + "config_md5"   = (known after apply)
+          + "metadata_md5" = (known after apply)
+        }
+    }
+
+Plan: 8 to add, 0 to change, 0 to destroy.
+
+Changes to Outputs:
+  + detalles_apps_simuladas = (sensitive value)
+  + id_entorno              = (known after apply)
+  + ruta_bienvenida         = "/mnt/d/Repos/CC3S2_Software_Development_25_1/Proyecto_iac_local/generated_environment/bienvenida.txt"
+
+─────────────────────────────────────────────────────────────────────────────
+
+Note: You didn't use the -out option to save this plan, so Terraform can't
+guarantee to take exactly these actions if you run "terraform apply" now.

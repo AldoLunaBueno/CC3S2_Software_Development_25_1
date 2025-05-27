@@ -68,3 +68,19 @@ Además, vemos los siguientes outputs:
         }
     }
     ```
+
+También podemos destruir los recursos:
+
+
+-   ```bash
+    terraform destroy
+    ```
+
+    ```txt
+    Plan: 0 to add, 0 to change, 12 to destroy.
+
+    Changes to Outputs:
+    - detalles_apps_simuladas = (sensitive value) -> null
+    - id_entorno              = "4d2e9d55fe6e5cc5" -> null
+    - ruta_bienvenida         = "/mnt/d/Repos/CC3S2_Software_Development_25_1/Proyecto_iac_local/generated_environment/bienvenida.txt" -> null
+    ```
