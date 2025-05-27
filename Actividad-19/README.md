@@ -1,17 +1,14 @@
 # Actividad: Orquestador local de entornos de desarrollo simulados con Terraform
 
+## Requisitos
+
 Acerca de los requisitos, para futura referencia, instalé Terraform siguiendo [el procedimiento oficial de HashiCorp](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli#install-terraform).
 
-![alt text](image-2.png)
+![alt text](images/image-2.png)
 
+## Comandos Terraform
 
-Según la guía, para crear y configurar todos los recursos simulados definidos por este proyecto, debemos de ejecutar los siguientes comandos de Terraform desde la carpeta raíz:
-
-```bash
-terraform init
-terraform plan # opcional
-terraform apply
-```
+### Problemas previos
 
 Como estoy usando WSL en Windows, en _./main.tf_ cambié la ruta por defecto de la variable "python_executable" a "/usr/bin/python3". Sin embargo, luego de ejecutar ``terraform apply`` surgieron varios errores no contemplados en la guía.
 
@@ -29,9 +26,47 @@ provisioner "local-exec" {
 }
 ```
 
-Esto fue suficiente para generar y configrar los recursos definidos en el proyecto:
+### Inicializar Terraform y aplicar cambios
+
+Según la guía, para crear y configurar todos los recursos simulados definidos por este proyecto, debemos de ejecutar los siguientes comandos de Terraform desde la carpeta raíz:
+
+```bash
+terraform init
+terraform plan # opcional
+terraform apply
+```
+
+Esto fue suficiente para generar y configurar los recursos definidos en el proyecto:
 
 ![alt text](images/image.png)
+![alt text](image.png)
+
+### Planificar cambios
+
+Esto se hace antes de ``terraform apply``, pero si inspeccionamos el plan generado haciendo ``terraform plan -no-color > plan.txt`` (lo guardamos en un documento de texto porque es una salida extensa) podremos entender qué recursos son creados. Vamos a filtrar solo las líneas que contienen ``+ resource``, que son en total 12:
+
+```
++ resource "local_file" "bienvenida"               # 1
++ resource "null_resource" "check_all_healths"     # 2
++ resource "null_resource" "validate_all_configs"  # 3
++ resource "random_id" "entorno_id"                # 4
+
+# A partir de aquí: recursos generados por module.simulated_apps
+# app1
++ resource "local_file" "config_json"              # 5
++ resource "local_file" "metadata_json"            # 6
++ resource "null_resource" "crear_directorio_app"  # 7
++ resource "null_resource" "start_service_sh"      # 8
+
+# app2
++ resource "local_file" "config_json"              # 9
++ resource "local_file" "metadata_json"            # 10
++ resource "null_resource" "crear_directorio_app"  # 11
++ resource "null_resource" "start_service_sh"      # 12
+
+```
+
+### Ver outputs
 
 Además, vemos los siguientes outputs:
 
@@ -39,7 +74,7 @@ Además, vemos los siguientes outputs:
     terraform output id_entorno
     ```
     ```txt
-    "4d2e9d55fe6e5cc5"
+    "f174d38f7fc3c19b"
     ```
 
 -   ```bash
@@ -69,8 +104,9 @@ Además, vemos los siguientes outputs:
     }
     ```
 
-También podemos destruir los recursos:
+### Destruir recursos
 
+También podemos destruir todos los recursos:
 
 -   ```bash
     terraform destroy
@@ -84,3 +120,45 @@ También podemos destruir los recursos:
     - id_entorno              = "4d2e9d55fe6e5cc5" -> null
     - ruta_bienvenida         = "/mnt/d/Repos/CC3S2_Software_Development_25_1/Proyecto_iac_local/generated_environment/bienvenida.txt" -> null
     ```
+
+### Operaciones avanzadas
+
+Pero podemos ser más específicos en qué recursos destruimos. Por ejemplo, podemos destruir solo los recursos de una de las apps:
+
+```bash
+terraform destroy -target='module.simulated_apps["app2"]' -auto-approve
+```
+
+![alt text](images/destroy-partial.png)
+
+Lo interesante es que no solo se borraron los cuatro recursos directamente asociados con la app:
+
+```txt
+local_file.config_json
+local_file.metadata_json
+null_resource.crear_directorio_app
+null_resource.start_service_sh
+```
+
+También se borraron otros dos recursos comunes:
+
+```txt
+null_resource.check_all_healths
+null_resource.validate_all_configs
+```
+
+Para explicar esto, debemos inspeccionar el código HCL de "./main.tf":
+
+```hcl
+resource "null_resource" "validate_all_configs" {
+  depends_on = [module.simulated_apps] # Asegura que las apps se creen primero
+  # ...
+}
+
+resource "null_resource" "check_all_healths" {
+  depends_on = [null_resource.validate_all_configs] # Después de validar
+  # ...
+}
+```
+
+Lo que sucede es que, si destruimos un recurso, todos los recursos que dependan de este también se destruyen. En el código se ve que el recurso validate_all_configs depende de las apps simuladas. Basta que una app se destruya para que validate_all_configs se destruya también. Y de este recurso depende también el otro recurso check_all_healths, que por lo tanto también es destruido. Esto explica por qué se destruyeron 6 recursos y no solo los 4 de app2.
