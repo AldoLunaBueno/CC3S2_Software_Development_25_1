@@ -10,7 +10,7 @@ Acerca de los requisitos, para futura referencia, instalé Terraform siguiendo [
 
 ### Problemas previos
 
-Como estoy usando WSL en Windows, en _./main.tf_ cambié la ruta por defecto de la variable "python_executable" a "/usr/bin/python3". Sin embargo, luego de ejecutar ``terraform apply`` surgieron varios errores no contemplados en la guía.
+Como estoy usando WSL en Windows, en "./main.tf" cambié la ruta por defecto de la variable "python_executable" a "/usr/bin/python3". Sin embargo, luego de ejecutar ``terraform apply`` surgieron varios errores no contemplados en la guía.
 
 Los archivos tenían caracteres ocultos '\r' debido a que estos archivos venían de un sistema que usa Windows. Esto es un problema porque al parecer Bash no es capaz de leer bien los archivos .sh si tiene estos caracteres de retorno de carro.
 
@@ -39,7 +39,6 @@ terraform apply
 Esto fue suficiente para generar y configurar los recursos definidos en el proyecto:
 
 ![alt text](images/image.png)
-![alt text](image.png)
 
 ### Planificar cambios
 
