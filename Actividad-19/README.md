@@ -161,3 +161,23 @@ resource "null_resource" "check_all_healths" {
 ```
 
 Lo que sucede es que, si destruimos un recurso, todos los recursos que dependan de este también se destruyen. En el código se ve que el recurso validate_all_configs depende de las apps simuladas. Basta que una app se destruya para que validate_all_configs se destruya también. Y de este recurso depende también el otro recurso check_all_healths, que por lo tanto también es destruido. Esto explica por qué se destruyeron 6 recursos y no solo los 4 de app2.
+
+# Fase 2
+
+Al intentar hacer las modificaciones solicitadas en la guía, surgió un problema en el recurso ejecutar_setup_inicial del módulo "./modules/environment_setup". Este recurso tiene definido en su bloque provisioner un argumento working_dir que cambia el directorio de trabajo desde el cual el script se ejecuta para crear un archivo setup_log.txt en ese directorio (generated_evironment/mi_proyecto_local_data). Pero la ruta del script en el argumento command era relativa, como se puede ver en el fragmento:
+
+```hcl
+provisioner "local-exec" {
+    command     = <<EOT
+        bash "${path.module}/scripts/initial_setup.sh" "${var.nombre_entorno_modulo}" "${local_file.readme_entorno.filename}"
+    EOT
+    interpreter = ["bash", "-c"]
+    working_dir = "${var.base_path}/${var.nombre_entorno_modulo}_data" # Ejecutar script desde aquí
+}
+```
+
+Según la documentación de Terraform, ${path.module} es una ruta relativa, ya que representa la ruta desde el el módulo raíz hasta el módulo actual. Al parecer, esto no se tuvo en cuenta al hacer el ejercicio. Por esto es que al cambiar el directorio de trabajo con work_dir la ruta del script también cambiaba, y no tenía ningún sentido. Esto se arregló usando una referencia absoluta antes de path.module: ``path.cwd``. Como en ningún momento usamos un comando como chdir, podemos usar de forma segura path.cwd para que nos dé el directorio desde el cual se ejecutó el comando ``terraform apply``. El ajuste entonces fue:
+
+```bash
+bash "${path.cwd}/${path.module}/scripts/initial_setup.sh"
+```
