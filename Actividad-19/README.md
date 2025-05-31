@@ -189,3 +189,79 @@ Como se puede observar, se creó el readme:
 Y el setup_log.txt:
 
 ![alt text](images/setup_log.png)
+
+## Ejercicio 1
+
+Este ejercicio nos obliga a hacer nuestro código más flexible a un cambio muy concreto: un servicio especial con un argumento de configuración extra.
+
+En "./main.tf", declaramos los datos principales de nuestros servicios dentro de una variable local common_app_config. Aquí es donde agregamos este servicio especial ``dbConnector`` con el argumento extra ``connection_string``:
+
+```hcl
+locals {
+  common_app_config = {
+    app1 = { version = "1.0.2", port = 8081 }
+    ...
+    dbConnector = {version = "1.0.0", port = 8080, connection_string = "path/to/database"}
+    ...
+  }
+}
+```
+
+Si no queremos que este cambio no rompa el código, la mejor opción es seguir el principio de la evolutividad. Vamos a propagar a lo largo de varios archivos un manejo flexible de este argumento. Primero, en el mismo "./main.tf" se debe hacer referencia al argumento ``connection_string`` en el bloque de invocación múltiple de módulo "simulated_apps". Para hacerlo de forma flexible usamos la función ``try()``:
+
+```hcl
+module "simulated_apps" {
+  for_each = local.common_app_config
+
+  source                   = "./modules/application_service"
+  app_name                 = each.key
+  app_version              = each.value.version
+  app_port                 = each.value.port
+  connection_string        = try(each.value.connection_string, null)
+  ...
+}
+```
+
+Si un servicio descrito en local.common_app_config no tiene el argumento ``connection_string``, entonces en el objeto each.value no existe la clave correspondiente ``each.value.connection_string`` y try() retorna ``null``.
+
+Y el cambio ahora se propaga al módulo invocado. Su archivo principal es "application_service/main.tf". El bloque que hace uso directo de los argumentos suministrados en la invocación de los módulos es este bloque de datos template_file, en donde planteamos un operador ternario condicional como en Java o JavaScript:
+
+```hcl
+data "template_file" "app_config" {
+  template = file("${path.module}/templates/config.json.tpl")
+  vars = {
+    app_name_tpl    = var.app_name
+    app_version_tpl = var.app_version
+    port_tpl        = var.app_port
+    connection_string_tpl = var.connection_string != null ? var.connection_string : ""
+    ...
+  }
+}
+```
+
+Lo que hacemos aquí es convertir una plantilla de json (con interpolación de cadenas usando "${}" y demás cosas que ya veremos) en un json simple. Por eso tenemos un argumento ``template`` que representa la plantilla a la cual se le incorporan las variables recogidas en el argumento ``vars``. El cambio fue añadir la variable ``connection_string_tpl`` de ```vars`` y asignarle condicionalmente el valor de var.connection_string si es que lo tiene o asignarle una cadena vacía. Podríamos haber simplemente asignado la variable sea nula o no, pero como este valor pasa a la plantilla, ahí es más fácil manejar una cadena vacía que un valor de tipo ``null``.
+
+Esto nos lleva al último archivo al que se propaga el cambio: la plantilla ``config.json.tpl``. En esta plnatilla de json podemos agregar una clave como "connectionString" cuyo valor sea la nueva variable ``connection_string_tpl``. Pero, si solo hacemos esto, los servicios que no tenga ``connection_string`` como argumento de configuración formarán un json con una cadena vacía como valor de "connectionString", así:
+
+```json
+{
+    "applicationName": "app1",
+    "version": "1.0.2",
+    "listenPort": "8081",
+    "connectionString": "",
+}
+```
+
+Esto no es un problema grave, pero es confuso e innecesario. Lo mejor es evitar que la clave aparezca en el json final envolviéndolo dentro de una **directiva condicional** que solo muestre la clave (y su valor, obviamente) si la variable ``connection_string_tpl`` no es una cadena vacía:
+
+```json
+{
+    "applicationName": "${app_name_tpl}",
+    "version": "${app_version_tpl}",
+    "listenPort": "${port_tpl}",
+    %{ if connection_string_tpl != "" }
+    "connectionString": "${connection_string_tpl}",
+    %{ endif }
+    ...
+}
+```
