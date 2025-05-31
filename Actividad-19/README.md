@@ -181,3 +181,11 @@ Según la documentación de Terraform, ${path.module} es una ruta relativa, ya q
 ```bash
 bash "${path.cwd}/${path.module}/scripts/initial_setup.sh"
 ```
+
+Como se puede observar, se creó el readme:
+
+![alt text](images/fase2.png)
+
+Y el setup_log.txt:
+
+![alt text](images/setup_log.png)
