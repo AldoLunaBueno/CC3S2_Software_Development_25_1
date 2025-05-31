@@ -1,0 +1,37 @@
+digraph G {
+  rankdir = "RL";
+  node [shape = rect, fontname = "sans-serif"];
+  "local_file.bienvenida" [label="local_file.bienvenida"];
+  "null_resource.check_all_healths" [label="null_resource.check_all_healths"];
+  "null_resource.validate_all_configs" [label="null_resource.validate_all_configs"];
+  "random_id.entorno_id" [label="random_id.entorno_id"];
+  subgraph "cluster_module.config_entorno_principal" {
+    label = "module.config_entorno_principal"
+    fontname = "sans-serif"
+    "module.config_entorno_principal.local_file.readme_entorno" [label="local_file.readme_entorno"];
+    "module.config_entorno_principal.null_resource.crear_directorio_base" [label="null_resource.crear_directorio_base"];
+    "module.config_entorno_principal.null_resource.ejecutar_setup_inicial" [label="null_resource.ejecutar_setup_inicial"];
+    "module.config_entorno_principal.random_id.entorno_id_modulo" [label="random_id.entorno_id_modulo"];
+  }
+  subgraph "cluster_module.simulated_apps" {
+    label = "module.simulated_apps"
+    fontname = "sans-serif"
+    "module.simulated_apps.data.external.app_metadata_py" [label="data.external.app_metadata_py"];
+    "module.simulated_apps.data.template_file.app_config" [label="data.template_file.app_config"];
+    "module.simulated_apps.local_file.config_json" [label="local_file.config_json"];
+    "module.simulated_apps.local_file.metadata_json" [label="local_file.metadata_json"];
+    "module.simulated_apps.null_resource.crear_directorio_app" [label="null_resource.crear_directorio_app"];
+    "module.simulated_apps.null_resource.start_service_sh" [label="null_resource.start_service_sh"];
+  }
+  "null_resource.check_all_healths" -> "null_resource.validate_all_configs";
+  "null_resource.validate_all_configs" -> "module.simulated_apps.null_resource.start_service_sh";
+  "module.config_entorno_principal.local_file.readme_entorno" -> "module.config_entorno_principal.null_resource.crear_directorio_base";
+  "module.config_entorno_principal.local_file.readme_entorno" -> "module.config_entorno_principal.random_id.entorno_id_modulo";
+  "module.config_entorno_principal.null_resource.ejecutar_setup_inicial" -> "module.config_entorno_principal.local_file.readme_entorno";
+  "module.simulated_apps.local_file.config_json" -> "module.simulated_apps.data.template_file.app_config";
+  "module.simulated_apps.local_file.config_json" -> "module.simulated_apps.null_resource.crear_directorio_app";
+  "module.simulated_apps.local_file.metadata_json" -> "module.simulated_apps.data.external.app_metadata_py";
+  "module.simulated_apps.local_file.metadata_json" -> "module.simulated_apps.null_resource.crear_directorio_app";
+  "module.simulated_apps.null_resource.start_service_sh" -> "module.simulated_apps.local_file.config_json";
+  "module.simulated_apps.null_resource.start_service_sh" -> "module.simulated_apps.local_file.metadata_json";
+}

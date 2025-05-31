@@ -98,6 +98,12 @@ ENV/
 terraform.tfstate
 terraform.tfstate.backup
 *.tfvars
+*.json
+*.txt
+*.pid
 
 ### Terraform Patch ###
 # End of https://www.gitignore.io/api/terraform
+
+
+generated_environment
