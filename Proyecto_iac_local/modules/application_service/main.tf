@@ -20,32 +20,35 @@ resource "null_resource" "crear_directorio_app" {
   }
 }
 
-# data "template_file" "app_config" {
-#   template = templatefile("${path.module}/templates/config.json.tpl")
-#   vars = {
-#     app_name_tpl    = var.app_name
-#     app_version_tpl = var.app_version
-#     port_tpl        = var.app_port
-#     connection_string_tpl = var.connection_string  # No funciona
-#     deployed_at_tpl = timestamp()
-#     message_tpl     = var.global_message_from_root
-#   }
-# }
-
-locals {
-  config_content = templatefile("${path.cwd}/${path.module}/templates/config.json.tpl", {
-    app_name_tpl          = var.app_name
-    app_version_tpl       = var.app_version
-    port_tpl              = var.app_port
+data "template_file" "app_config" {
+  template = file("${path.module}/templates/config.json.tpl")
+  vars = {
+    app_name_tpl    = var.app_name
+    app_version_tpl = var.app_version
+    port_tpl        = var.app_port
     connection_string_tpl = var.connection_string != null ? var.connection_string : ""
-    deployed_at_tpl       = timestamp()
-    message_tpl           = var.global_message_from_root
-  })
+    deployed_at_tpl = timestamp()
+    message_tpl     = var.global_message_from_root
+  }
 }
 
+# Esta es una forma más moderna que evita el uso del bloque de datos template_file
+# y en su lugar usa la función templatefile(), pero no es necesario hacerlo así:
+
+# locals {
+#   config_content = templatefile("${path.cwd}/${path.module}/templates/config.json.tpl", {
+#     app_name_tpl          = var.app_name
+#     app_version_tpl       = var.app_version
+#     port_tpl              = var.app_port
+#     connection_string_tpl = var.connection_string != null ? var.connection_string : ""
+#     deployed_at_tpl       = timestamp()
+#     message_tpl           = var.global_message_from_root
+#   })
+# }
+
 resource "local_file" "config_json" {
-  # content    = data.template_file.app_config.rendered
-  content = local.config_content
+  content    = data.template_file.app_config.rendered
+  # content = local.config_content
   filename   = "${local.install_path}/config.json"
   depends_on = [null_resource.crear_directorio_app]
 }
