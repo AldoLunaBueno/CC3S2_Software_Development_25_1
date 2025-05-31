@@ -101,9 +101,10 @@ terraform.tfstate.backup
 *.json
 *.txt
 *.pid
+.terraform*
 
 ### Terraform Patch ###
 # End of https://www.gitignore.io/api/terraform
 
 
-generated_environment
+generated_environment/

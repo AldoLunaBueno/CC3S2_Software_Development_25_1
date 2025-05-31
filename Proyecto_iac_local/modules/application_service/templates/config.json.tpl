@@ -2,6 +2,9 @@
     "applicationName": "${app_name_tpl}",
     "version": "${app_version_tpl}",
     "listenPort": "${port_tpl}",
+    %{ if connection_string_tpl != "" }
+    "connectionString": "${connection_string_tpl}",
+    %{ endif }
     "deploymentTime": "${deployed_at_tpl}",
     "notes": "Este es un archivo de configuración autogenerado. ${message_tpl}",
     "settings": {

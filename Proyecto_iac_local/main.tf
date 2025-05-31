@@ -21,10 +21,12 @@ variable "python_executable" {
   default     = "/usr/bin/python3"
 }
 
+# Nombres de servicios con guiones bajos rompen el código
 locals {
   common_app_config = {
     app1 = { version = "1.0.2", port = 8081 }
     app2 = { version = "0.5.0", port = 8082 }
+    dbConnector = {version = "1.0.0", port = 8080, connection_string = "path/to/database"}
     # Se pueden añadir más para superar las 700 líneas fácilmente
     # app3 = { version = "2.1.0", port = 8083 }
     # app4 = { version = "1.0.0", port = 8084 }
@@ -38,6 +40,7 @@ module "simulated_apps" {
   app_name                 = each.key
   app_version              = each.value.version
   app_port                 = each.value.port
+  connection_string        = try(each.value.connection_string, null)
   base_install_path        = "${path.cwd}/generated_environment/services"
   global_message_from_root = var.mensaje_global # Pasar la variable sensible
   python_exe               = var.python_executable
